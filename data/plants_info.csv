@@ -1,0 +1,53 @@
+urdu_name,scientific_name,disease_names,causes,symptoms,treatment_organic,treatment_chemical,irrigation
+Kachnar,Bauhinia variegata,Leaf Spot,Fungal pathogens,Dark brown spots on leaves.,Remove fallen leaves; Neem oil.,Copper fungicide.,Water at base.
+Kachnar,Bauhinia variegata,Canker,Bacterial/Fungal,Sunken lesions on branches.,Prune infected branches.,Streptomycin spray.,Avoid overwatering.
+Kachnar,Bauhinia variegata,Root Rot,Phytophthora,Wilting and yellowing of leaves.,Improve drainage; use compost.,Fosetyl-Al drench.,Allow soil to dry.
+Kachnar,Bauhinia variegata,Powdery Mildew,Fungus (Erysiphe),White powdery coating on leaves.,Sulfur spray; thinning.,Triadimefon.,Morning watering.
+Thuja,Thuja,Tip Blight,Pestalotiopsis,Brown tips with black spots.,Prune and burn infected tips.,Mancozeb.,Avoid overhead water.
+Thuja,Thuja,Root Rot,Armillaria,Stunted growth; honey-colored fungi.,Remove debris; good drainage.,Copper drench.,Moderate.
+Thuja,Thuja,Canker,Seiridium,Bleeding cankers on bark.,Sterilized pruning.,Thiophanate-methyl.,Deep watering.
+Thuja,Thuja,Needle Blight,Didymascella,Small brown spots on scales.,Clear leaf litter.,Chlorothalonil.,Good airflow.
+Rose,Rosa,Powdery Mildew,Sphaerotheca,White powder on buds.,Milk-water spray.,Sulfur dust.,Keep leaves dry.
+Rose,Rosa,Black Spot,Diplocarpon,Circular black spots; yellow halo.,Remove leaves; Neem oil.,Propiconazole.,Morning watering.
+Rose,Rosa,Rust,Phragmidium,Orange pustules under leaves.,Prune infected parts.,Mancozeb.,Base watering.
+Rose,Rosa,Botrytis Blight,Botrytis cinerea,Gray mold on flowers/buds.,Remove dead flowers.,Carbendazim.,Avoid humidity.
+Euphorbia,Euphorbia,Root Rot,Overwatering,"Soft, mushy stem base.",Let soil dry; repot.,Fungicide drench.,Very minimal.
+Euphorbia,Euphorbia,Powdery Mildew,Fungus,White patches on leaves.,Increase sunlight.,Sulfur spray.,Dry environment.
+Euphorbia,Euphorbia,Leaf Spot,Alternaria,Necrotic spots with rings.,Remove spotted leaves.,Copper spray.,Controlled.
+Euphorbia,Euphorbia,Stem Rot,Fusarium,Stem collapses; orange spores.,Discard infected plants.,Systemic fungicide.,Sparse.
+Guava,Psidium guajava,Wilt,Fusarium oxysporum,Leaves turn yellow/brown; hang vertically.,Soil solarization; resistant varieties.,Lime/Copper drench.,Check drainage.
+Guava,Psidium guajava,Anthracnose (Fruit),Colletotrichum,Sunken spots on fruit; pink spores.,Prune for air; remove rot.,Mancozeb.,Avoid wet foliage.
+Guava,Psidium guajava,Leaf Spot,Cercospora,"Small, irregular brown spots.",Neem oil.,Chlorothalonil.,Base irrigation.
+Guava,Psidium guajava,Fruit Canker,Pestalotiopsis,"Brown, corky lesions on fruit.",Prune branches.,Copper oxychloride.,Consistent.
+Neem,Azadirachta indica,Damping Off,Soil Fungus,Seedlings collapse at base.,Sterilized soil.,Bavistin drench.,Topsoil slightly dry.
+Neem,Azadirachta indica,Leaf Webber,Insect Larvae,Webbed leaves; skeletonized.,Manually remove webs.,Cypermethrin.,Regular.
+Neem,Azadirachta indica,Powdery Mildew,Oidium,White floury patches.,Neem oil spray.,Sulfur spray.,Air circulation.
+Neem,Azadirachta indica,Root Rot,Ganoderma,Brackets at base; wilting.,Remove infected trees.,Soil treatment.,Moderate.
+Sheesham,Dalbergia sissoo,Dieback,Fusarium/Ceratocystis,Drying of top branches; bark split.,Prune dead wood.,Topsin-M.,Regular watering.
+Sheesham,Dalbergia sissoo,Wilt,Fusarium,Sudden leaf drooping.,Resistant varieties.,Fungicide drench.,Deep watering.
+Sheesham,Dalbergia sissoo,Leaf Spot,Colletotrichum,Black spots on foliage.,Clear fallen leaves.,Copper spray.,Controlled.
+Sheesham,Dalbergia sissoo,Powdery Mildew,Phyllactinia,White growth on underside.,Thinning crown.,Sulfur fungicide.,Moderate.
+Rubber Tree,Ficus elastica,Leaf Spot,Fungal/Bacterial,Dark patches on leaves.,Wipe with Neem.,Broad-spectrum spray.,Reduce humidity.
+Rubber Tree,Ficus elastica,Anthracnose,Glomerella,"Tan, sunken lesions.",Avoid overhead water.,Chlorothalonil.,Let soil dry.
+Rubber Tree,Ficus elastica,Root Rot,Pythium,Yellowing leaves; brown roots.,Repot in fresh soil.,Metalaxyl.,Allow top dry.
+Rubber Tree,Ficus elastica,Sooty Mold,Aphid secretion,Black soot on leaves.,Wash with soapy water.,Treat insects first.,Mist cleaning.
+Sufaida,Eucalyptus globulus,Leaf Spot,Fungal pathogens,Circular brown spots.,Collect fallen leaves.,Copper fungicide.,Moderate.
+Sufaida,Eucalyptus globulus,Canker,Botryosphaeria,Cracked bark; oozing sap.,Prune during dry weather.,Wound dressing.,Drought tolerant.
+Sufaida,Eucalyptus globulus,Powdery Mildew,Erysiphe,White dusty coating.,Pruning for air.,Sulfur fungicide.,Good drainage.
+Sufaida,Eucalyptus globulus,Root Rot,Phytophthora,Slow decline; leaf loss.,Improve drainage.,Phosphite treatment.,Avoid stagnant water.
+Aloe Vera,Aloe barbadensis,Aloe Rust,Phakopsora,Small black/brown spots.,Prune infected leaves.,Sulphur spray.,Very minimal.
+Aloe Vera,Aloe barbadensis,Root Rot,Phytophthora,"Soft, brown roots.",Well-draining soil.,Aliette (Fosetyl-Al).,Wait for dry soil.
+Aloe Vera,Aloe barbadensis,Soft Rot,Erwinia,Leaves become watery/mushy.,Avoid overwatering.,Copper spray.,Minimal.
+Aloe Vera,Aloe barbadensis,Leaf Spot,Colletotrichum,Round dark spots.,Keep leaves dry.,Mancozeb.,Avoid overhead.
+Rabail/Jasmine,Jasminum sambac,Leaf Spot,Alternaria,Small brown dots on leaves.,Remove debris; Neem oil.,Copper fungicide.,Regular.
+Rabail/Jasmine,Jasminum sambac,Powdery Mildew,Oidium,White dust on shoots.,Increase sun; prune.,Sulfur fungicide.,Morning water.
+Rabail/Jasmine,Jasminum sambac,Root Rot,Pythium,Sudden wilting.,Improve drainage.,Bavistin.,Let soil dry.
+Rabail/Jasmine,Jasminum sambac,Rust,Uromyces,Orange spots on stems/leaves.,Prune early.,Propiconazole.,Base watering.
+Toot,Morus alba,Leaf Spot,Cercospora,Small circular brown spots.,Collection of leaves.,Copper sprays.,Moderate.
+Toot,Morus alba,Powdery Mildew,Phyllactinia,White coating on underside.,Thinning branches.,Sulfur dust.,Regular.
+Toot,Morus alba,Root Rot,Ganoderma,Death of tree roots.,Avoid injury to roots.,Soil disinfection.,Controlled.
+Toot,Morus alba,Popcorn Disease,Ciboria,Fruit swells like popcorn.,Remove fallen fruit.,Fungicide.,Morning water.
+Java Plum,Syzygium cumini,Anthracnose,Colletotrichum,Sunken spots on fruit/leaves.,Prune for air.,Carbendazim.,Consistent.
+Java Plum,Syzygium cumini,Leaf Spot,Pestalotiopsis,Irregular brown leaf spots.,Neem spray.,Copper oxychloride.,Moderate.
+Java Plum,Syzygium cumini,Fruit Rot,Fungal,Fruit drops early; rots.,Clear floor.,Fungicide.,Regular.
+Java Plum,Syzygium cumini,Powdery Mildew,Fungi,Dusty white leaves.,Good spacing.,Sulfur spray.,Controlled.
