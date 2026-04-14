@@ -1217,7 +1217,7 @@ async def irrigation_page(data: IrrigationRequest, db: Session = Depends(get_db)
         #soil_moisture=data.soil_moisture,
         #temperature=data.temperature
     #)
-    save_to_remote_db("/feature/irrigation-analysis",{"user_msg":f"Irrigation: {data.crop_type} at {data.soil_moisture}% moisture", 
+        save_to_remote_db("/feature/irrigation-analysis",{"user_msg":f"Irrigation: {data.crop_type} at {data.soil_moisture}% moisture", 
         "ai_msg":final_answer})
     except Exception as e:
         print(f"Remote DB failed: {e}")
@@ -1294,7 +1294,7 @@ async def soil_analysis_page(data: SoilAnalysisRequest, db: Session = Depends(ge
         #soil_moisture=data.moisture_level,
         #soil_type=data.soil_type
     #)
-    save_to_remote_db("/feature/soil-analysis",{"user_msg":f"Soil: {data.soil_type}", "ai_msg":final_answer})
+        save_to_remote_db("/feature/soil-analysis",{"user_msg":f"Soil: {data.soil_type}", "ai_msg":final_answer})
     except Exception as e:
         print(f"Remote DB failed: {e}")
     
@@ -1369,7 +1369,7 @@ async def crop_production_page(data: CropProductionRequest, db: Session = Depend
         ##fertility=data.soil_fertility,
         #irrigation_efficiency=data.irrigation_efficiency
     #)
-    save_to_remote_db("/feature/production-analysis",{"user_msg":f"Boost: {data.plant_type}","ai_msg":final_answer})
+        save_to_remote_db("/feature/production-analysis",{"user_msg":f"Boost: {data.plant_type}","ai_msg":final_answer})
     except Exception as e:
         print(f"Remote DB failed: {e}")
 
