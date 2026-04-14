@@ -1151,8 +1151,8 @@ async def ask_voice(file: UploadFile = File(...), db: Session = Depends(get_db))
             #ai_recommendation=final_answer_text,     # Column N (The "What AI said" column)
                    # Column A
         #)
-        save_to_remote_db("/assistant/ask",{ "user_msg":transcribed_text,
-            "ai_msg":final_answer_text} )
+            save_to_remote_db("/assistant/ask",{ "user_msg":transcribed_text,
+                "ai_msg":final_answer_text} )
         except Exception as e:
             print(f"Remote DB failed: {e}")
 
