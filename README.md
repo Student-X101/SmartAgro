@@ -2,7 +2,7 @@
 title: AI Farming Assistant
 emoji: 🚜
 colorFrom: green
-colorTo: leaf
+colorTo: green
 sdk: docker
 app_port: 8000
 pinned: false
