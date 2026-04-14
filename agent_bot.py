@@ -1512,7 +1512,7 @@ if __name__ == "__main__":
     print("="*50 + "\n")
     
     # This replaces the asyncio.get_event_loop().create_task(...) lines
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+   # uvicorn.run(app, host="0.0.0.0", port=8000)
  
             
 #===========================================================================
