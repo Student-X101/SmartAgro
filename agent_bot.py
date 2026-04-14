@@ -1,3 +1,4 @@
+import nest_asyncio
 import pandas as pd
 import base64
 import uvicorn
@@ -1368,7 +1369,7 @@ async def crop_production_page(data: CropProductionRequest, db: Session = Depend
         ##fertility=data.soil_fertility,
         #irrigation_efficiency=data.irrigation_efficiency
     #)
-    save_to_remote_db("/feature/production-analysis",{"user_msg":f"Boost: {data.plant_type}","ai_msg":final_answer)
+    save_to_remote_db("/feature/production-analysis",{"user_msg":f"Boost: {data.plant_type}","ai_msg":final_answer})
     except Exception as e:
         print(f"Remote DB failed: {e}")
 
