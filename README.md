@@ -1,5 +1,5 @@
 ---
-title: AI Farming Assistant
+title: SmartAgro
 emoji: 🚜
 colorFrom: green
 colorTo: green
@@ -8,5 +8,5 @@ app_port: 8000
 pinned: false
 ---
 
-# AI Farming Assistant
+# SmartAgro
 This is my project for the agricultural AI assistant.
