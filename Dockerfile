@@ -1,17 +1,25 @@
-# Use Python
 FROM python:3.10-slim
+# 1. Start with the root user to install system tools
+USER root
 
-# Set the working directory
+# 2. Install ffmpeg (fixes the ffprobe error)
+RUN apt-get update && apt-get install -y ffmpeg
+
+# 3. Create the user if it doesn't exist and switch back (Hugging Face requirement)
+RUN useradd -m -u 1000 user
+USER user
+ENV PATH="/home/user/.local/bin:${PATH}"
+
+# 4. Set the working directory
 WORKDIR /app
 
-# Copy your files into the container
-COPY . .
+# 5. Copy your files
+COPY --chown=user . .
 
-# Install libraries
+# 6. Now run pip (this will work now!)
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Expose the port (Hugging Face uses 7860 by default)
-EXPOSE 7860
-
-# Run the app
+# 7. Start the app
 CMD ["uvicorn", "agent_bot:app", "--host", "0.0.0.0", "--port", "7860"]
+
+
