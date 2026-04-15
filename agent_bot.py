@@ -1443,7 +1443,7 @@ async def root(db: Session = Depends(get_db)):
 
      # Check Remote Connection
     try:
-        remote_res = requests.get(f"{DATABASE_URL}/ping", timeout=3)
+        remote_res = requests.get(f"{DATABASE_URL}/ping", timeout=30)
         remote_status = "Connected" if remote_res.status_code == 200 else "Offline"
     except:
         remote_status = "Connection Failed"    
@@ -1510,9 +1510,10 @@ if __name__ == "__main__":
     print("🌾 SMARTAGRO SERVER IS STARTING 🌾")
     print("Click here to test: http://127.0.0.1:8000/docs")
     print("="*50 + "\n")
+    uvicorn.run(app, host="0.0.0.0", port=8000)
+    
     
     # This replaces the asyncio.get_event_loop().create_task(...) lines
-   # uvicorn.run(app, host="0.0.0.0", port=8000)
  
             
 #===========================================================================
