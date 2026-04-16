@@ -95,6 +95,20 @@ model_2 = ChatGoogleGenerativeAI(model="gemini-2.5-flash-lite", google_api_key=s
 # This replaces your manual rotation function
 llm = model_1.with_fallbacks([model_2])
 
+# 1. This object contains the "Brain" (Model 1) and the "Backup" (Model 2)
+llm = model_1.with_fallbacks([model_2])
+
+def get_llm_response(prompt):
+    try:
+        # ✅ Call 'llm' so LangChain knows to try Model 1, 
+        # then automatically try Model 2 if Model 1 fails.
+        response = llm.invoke(prompt)
+        return response
+    except Exception as e:
+        # This only runs if BOTH models fail (e.g., both API keys are blocked)
+        print(f"CRITICAL ERROR: Both models failed! {e}")
+        return "System overloaded. Please try again in a few minutes."
+
 # 5. Keep your Async execution logic
 async def run_agent(user_input, image_data=None):
     # Your existing async logic to process inputs
@@ -857,40 +871,40 @@ def save_to_remote_db(endpoint_path: str, payload: dict):
 
 #=======================================================================================================
 
-LOCAL_DATABASE_URL = "sqlite:///./farming.db"
+#LOCAL_DATABASE_URL = "sqlite:///./farming.db"
         
-engine = create_engine(LOCAL_DATABASE_URL, connect_args={"check_same_thread": False})
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+#engine = create_engine(LOCAL_DATABASE_URL, connect_args={"check_same_thread": False})
+#SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-class Base(DeclarativeBase):
-    pass
-class AgriHistory(Base):
-    __tablename__ = "history"
-    id = Column(Integer, primary_key=True, index=True)
-    timestamp = Column(DateTime, default=datetime.utcnow)
-    user_message = Column(String)
-    ai_response = Column(String)
-    tool_used = Column(String)
+#class Base(DeclarativeBase):
+#    pass
+#class AgriHistory(Base):
+   # __tablename__ = "history"
+    #id = Column(Integer, primary_key=True, index=True)
+    #timestamp = Column(DateTime, default=datetime.utcnow)
+    #user_message = Column(String)
+    #ai_response = Column(String)
+    #tool_used = Column(String)
 
 # This command physically creates the 'farming.db' file
-Base.metadata.create_all(bind=engine)
+#Base.metadata.create_all(bind=engine)
 
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+#def get_db():
+    #db = SessionLocal()
+    #try:
+       # yield db
+    #finally:
+     #   db.close()
 
-def save_to_db(user_msg: str, ai_msg: str, tool: str, db: Session):
-    new_entry = AgriHistory(
-        user_message=user_msg, 
-        ai_response=ai_msg, 
-        tool_used=tool
-    )
-    db.add(new_entry)
-    db.commit()
-    db.refresh(new_entry)
+#def save_to_db(user_msg: str, ai_msg: str, tool: str, db: Session):
+ #   new_entry = AgriHistory(
+  #      user_message=user_msg, 
+   #     ai_response=ai_msg, 
+    #    tool_used=tool
+    #)
+    #db.add(new_entry)
+    #db.commit()
+    #db.refresh(new_entry)
 #=======================================================================================================================
 # --- Pydantic Models for Farmer-Friendly Endpoints ---
 class SoilAnalysisRequest(BaseModel):
@@ -949,12 +963,12 @@ async def weather_page(data: LocationRequest, db: Session = Depends(get_db)):
         final_answer = str(raw_content)
 
     # 4. Save to History
-    save_to_db(
-        user_msg=f"Weather check: {data.location}", 
-        ai_msg=final_answer, 
-        tool="Weather Agent (Location-Based)", 
-        db=db
-    )
+    #save_to_db(
+       # user_msg=f"Weather check: {data.location}", 
+       # ai_msg=final_answer, 
+        #tool="Weather Agent (Location-Based)", 
+       # db=db
+   # )
 
     response_payload = {"status": "success", "recommendation": final_answer}
 
@@ -1071,7 +1085,7 @@ async def ask_text(prompt: str, db: Session = Depends(get_db)):
     # Log which tool was used (Price tool, Search tool, or Internal)
     tool_used = last_msg.tool_calls[0]['name'] if getattr(last_msg, 'tool_calls', None) else "Direct Context"
 
-    save_to_db(user_msg=prompt, ai_msg=final_answer_text, tool=tool_used, db=db)
+    #save_to_db(user_msg=prompt, ai_msg=final_answer_text, tool=tool_used, db=db)
     # --- save to db ---
     #payload = {"message": user_input, "ai_response": ai_msg.content}
     #save_to_remote_db(f"{DATABASE_URL}/assistant/text", json=payload)
@@ -1137,12 +1151,12 @@ async def ask_voice(file: UploadFile = File(...), db: Session = Depends(get_db))
         if final_answer.tool_calls:
             tool_used = final_answer.tool_calls[0]['name']
 
-        save_to_db(
-            user_msg=f"Voice Query: {transcribed_text}",
-            ai_msg=final_answer_text,
-            tool=tool_used,
-            db=db
-        )
+     #   save_to_db(
+      #      user_msg=f"Voice Query: {transcribed_text}",
+       #     ai_msg=final_answer_text,
+         #   tool=tool_used,
+        #    db=db
+        #)
         try:
             #universal_save(
             #feature="Voice Assistant",        # Column B
@@ -1202,12 +1216,12 @@ async def irrigation_page(data: IrrigationRequest, db: Session = Depends(get_db)
         final_answer = str(raw_content)
 
     # 4. Save to DB
-    save_to_db(
-        user_msg=f"Irrigation: {data.crop_type} at {data.soil_moisture}% moisture", 
-        ai_msg=final_answer, 
-        tool="Irrigation AI Tool", 
-        db=db
-    )
+    #save_to_db(
+     #   user_msg=f"Irrigation: {data.crop_type} at {data.soil_moisture}% moisture", 
+      #  ai_msg=final_answer, 
+       # tool="Irrigation AI Tool", 
+        #db=db
+    #)
    #5. save to remote db
     try:
         #universal_save(
@@ -1285,7 +1299,7 @@ async def soil_analysis_page(data: SoilAnalysisRequest, db: Session = Depends(ge
         # Cleaning for SQLite
     final_answer = " ".join([item.get("text", "") for item in raw_content if isinstance(item, dict)]) if isinstance(raw_content, list) else str(raw_content)
 
-    save_to_db(user_msg=f"Soil: {data.soil_type} and Soil Moisture:{data.moisture_level} ", ai_msg=final_answer, tool="Soil Analysis Tool", db=db)
+    #save_to_db(user_msg=f"Soil: {data.soil_type} and Soil Moisture:{data.moisture_level} ", ai_msg=final_answer, tool="Soil Analysis Tool", db=db)
     # --- save to db ---
     try:
         #universal_save(
@@ -1360,7 +1374,7 @@ async def crop_production_page(data: CropProductionRequest, db: Session = Depend
     # Cleaning for SQLite
     final_answer = " ".join([item.get("text", "") for item in raw_content if isinstance(item, dict)]) if isinstance(raw_content, list) else str(raw_content)
 
-    save_to_db(user_msg=f"Boost: {data.plant_type} , Fertility:{data.soil_fertility} and Irrigation Efficiency:{data.irrigation_efficiency}", ai_msg=final_answer, tool="Production Boost Tool", db=db)
+    #save_to_db(user_msg=f"Boost: {data.plant_type} , Fertility:{data.soil_fertility} and Irrigation Efficiency:{data.irrigation_efficiency}", ai_msg=final_answer, tool="Production Boost Tool", db=db)
     try:
         #universal_save(
         #feature="Production Boost",
@@ -1391,12 +1405,12 @@ async def disease_page(
         # Pass both image and plant_type to the analysis function
         ai_result = await analyze_scan(img_bytes, plant_type)
         
-        save_to_db(
-            user_msg=f"Image Scan for {plant_type}",
-            ai_msg=ai_result,
-            tool="Vision + Hybrid Remedy Expert",
-            db=db
-        )
+     #   save_to_db(
+      #      user_msg=f"Image Scan for {plant_type}",
+       #     ai_msg=ai_result,
+        #    tool="Vision + Hybrid Remedy Expert",
+         #   db=db
+        #)
         try:
             #universal_save(
             #f#eature="Disease Scanner",
@@ -1454,40 +1468,40 @@ async def root(db: Session = Depends(get_db)):
         #"docs_url": "/docs"
     }
 
-@app.get("/history")
-async def get_farming_history(db: Session = Depends(get_db)):
-    """
-    Teammates call this to see all past AI suggestions and scans.
-    """
-    try:
+#@app.get("/history")
+#async def get_farming_history(db: Session = Depends(get_db)):
+ #   """
+  #  Teammates call this to see all past AI suggestions and scans.
+   # """
+    #try:
         # Fetching all records, sorted by newest first
-        history = db.query(AgriHistory).order_by(AgriHistory.timestamp.desc()).all()
+     #   history = db.query(AgriHistory).order_by(AgriHistory.timestamp.desc()).all()
         
-        results = []
-        for item in history:
-            results.append({
-                "id": item.id,
-                "time": item.timestamp.strftime("%Y-%m-%d %H:%M"),
-                "query": item.user_message,
-                "answer": item.ai_response,
-                "method": item.tool_used
-            })
+      #  results = []
+       # for item in history:
+        #    results.append({
+         #       "id": item.id,
+          #      "time": item.timestamp.strftime("%Y-%m-%d %H:%M"),
+           #     "query": item.user_message,
+            #    "answer": item.ai_response,
+             #   "method": item.tool_used
+            #})#
             
-        return {"status": "success", "total_records": len(results), "data": results}
-    except Exception as e:
-        return {"status": "error", "message": str(e)}
+        #return {"status": "success", "total_records": len(results), "data": results}
+    #except Exception as e:
+     #   return {"status": "error", "message": str(e)}
 
 
 @app.get("/db-status")
 async def check_status(db: Session = Depends(get_db)):
     # Check Local DB
-    local_count = db.query(AgriHistory).count()
-    try:
+    #local_count = db.query(AgriHistory).count()
+    #try:
         # Try a simple query to see if the external DB is alive
-        db.execute(text("SELECT 1")) 
-        db_status = "Connected"
-    except Exception:
-        db_status = "Disconnected"
+     #   db.execute(text("SELECT 1")) 
+      #  db_status = "Connected"
+    #except Exception:
+     #   db_status = "Disconnected"
 
     # Check Remote Connection
     try:
@@ -1497,10 +1511,10 @@ async def check_status(db: Session = Depends(get_db)):
         remote_status = "Connection Failed"
         
     return {
-        "local_history_count": local_count,
+      #  "local_history_count": local_count,
         "remote_backend_status": remote_status,
         "remote_url": DATABASE_URL,
-        "db_status": db_status
+       # "db_status": db_status
     }
 #==================================================================================================================
 if __name__ == "__main__":
@@ -1510,7 +1524,7 @@ if __name__ == "__main__":
     print("🌾 SMARTAGRO SERVER IS STARTING 🌾")
     print("Click here to test: http://127.0.0.1:8000/docs")
     print("="*50 + "\n")
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+   # uvicorn.run(app, host="0.0.0.0", port=8000)
     
     
     # This replaces the asyncio.get_event_loop().create_task(...) lines
