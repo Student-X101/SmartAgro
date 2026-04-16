@@ -20,6 +20,6 @@ COPY --chown=user . .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # 7. Start the app
-CMD ["uvicorn", "agent_bot:app", "--host", "0.0.0.0", "--port", "7860"]
+CMD ["uvicorn", "agent_bot:app", "--host", "0.0.0.0", "--port", "8000"]
 
 
