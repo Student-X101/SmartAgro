@@ -3,6 +3,7 @@ fastapi
 uvicorn
 starlette
 python-multipart
+nest_asyncio
 
 # AI & Agents
 langchain
