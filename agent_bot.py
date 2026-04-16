@@ -546,7 +546,7 @@ def hybrid_remedy_expert(plant_name: str, disease_name: str):
         df = pd.read_csv("data/plants_info.csv")
         # ... (matching logic) ...
     except Exception as e:
-        print(f"Data Warning: CSV not found or unreadable: {e}"
+        print(f"Data Warning: CSV not found or unreadable: {e}")
     # Make matching more flexible: check if the disease from the CSV is *contained within* the disease name from the LLM.
     # This handles cases where the LLM passes "guava wilt" but the CSV just has "wilt".
     match = df[(df['urdu_name'].str.lower() == p_name) &
