@@ -1051,7 +1051,7 @@ async def weather_page(data: LocationRequest):
 import pandas as pd
 
 @app.post("/ask-text")
-async def ask_text(prompt: str)):
+async def ask_text(prompt: str):
     # 1. DIRECT DATA INJECTION (Crop CSV & Disease Handbook Context)
     bonus_context = ""
     
@@ -1542,7 +1542,7 @@ if __name__ == "__main__":
     print("🌾 SMARTAGRO SERVER IS STARTING 🌾")
     print("Click here to test: http://127.0.0.1:8000/docs")
     print("="*50 + "\n")
-   # uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=8000)
     
     
     # This replaces the asyncio.get_event_loop().create_task(...) lines
