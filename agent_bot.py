@@ -42,28 +42,28 @@ app.add_middleware(
 
 load_dotenv()
 
-IS_VERCEL = "VERCEL" in os.environ
+#IS_VERCEL = "VERCEL" in os.environ
 
-if not IS_VERCEL:
+#if not IS_VERCEL:
     #This block ONLY runs on your local computer
-    os.environ["KAGGLEHUB_CACHE"] = os.path.join(os.path.expanduser("~"), ".khub")
-    import kagglehub
-    print("Syncing Agricultural Datasets (Local Mode)...")
-    paths = {
-        "guava": r"C:\Users\A\.khub\datasets\shuvokumarbasak4004\guava-fruit-and-leaf-diseases-data-latest-and-updated",
-        "rose": r"C:\Users\A\.khub\datasets\shuvokumarbasak4004\rose-leaf-disease-dataset",
-        "neem": r"C:\Users\A\.khub\datasets\vidyahanand\neemazadirachta-indica-healthy-diseased-spectrum",
-        "aleovera": r"C:\Users\A\.khub\datasets\aleovera"
-    }
-else:
-   #  This block runs on Vercel
-    print("Running on Vercel: Using relative data paths.")
-    paths = {
-       "guava": "./data/guava",
-        "neem": "./data/neem",
-        "rose": "./data/rose",
-        "aleovera": "./data/aleovera"
-    }
+    #os.environ["KAGGLEHUB_CACHE"] = os.path.join(os.path.expanduser("~"), ".khub")
+    #import kagglehub
+    #print("Syncing Agricultural Datasets (Local Mode)...")
+   # paths = {
+       # "guava": r"C:\Users\A\.khub\datasets\shuvokumarbasak4004\guava-fruit-and-leaf-diseases-data-latest-and-updated",
+       # "rose": r"C:\Users\A\.khub\datasets\shuvokumarbasak4004\rose-leaf-disease-dataset",
+       # "neem": r"C:\Users\A\.khub\datasets\vidyahanand\neemazadirachta-indica-healthy-diseased-spectrum",
+       # "aleovera": r"C:\Users\A\.khub\datasets\aleovera"
+    #}
+#else:
+ #  #  This block runs on Vercel
+  #  print("Running on Vercel: Using relative data paths.")
+   # paths = {
+    #   "guava": "./data/guava",
+     #   "neem": "./data/neem",
+      #  "rose": "./data/rose",
+       # "aleovera": "./data/aleovera"
+    #}
 
 # Download all datasets and store their paths
 #print("Syncing Agricultural Datasets...")
