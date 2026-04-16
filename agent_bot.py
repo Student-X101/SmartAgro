@@ -45,7 +45,7 @@ load_dotenv()
 IS_VERCEL = "VERCEL" in os.environ
 
 if not IS_VERCEL:
-    # This block ONLY runs on your local computer
+    #This block ONLY runs on your local computer
     os.environ["KAGGLEHUB_CACHE"] = os.path.join(os.path.expanduser("~"), ".khub")
     import kagglehub
     print("Syncing Agricultural Datasets (Local Mode)...")
@@ -56,10 +56,10 @@ if not IS_VERCEL:
         "aleovera": r"C:\Users\A\.khub\datasets\aleovera"
     }
 else:
-    # This block runs on Vercel
+   #  This block runs on Vercel
     print("Running on Vercel: Using relative data paths.")
     paths = {
-        "guava": "./data/guava",
+       "guava": "./data/guava",
         "neem": "./data/neem",
         "rose": "./data/rose",
         "aleovera": "./data/aleovera"
