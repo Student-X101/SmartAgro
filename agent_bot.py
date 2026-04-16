@@ -1,70 +1,69 @@
-from fastapi import FastAPI, Depends, HTTPException, Form, UploadFile, File, Body
 import nest_asyncio
-nest_asyncio.apply()
-#app = FastAPI()
-# Force-mapping for Vercel's discovery engine
-application = app = handler = FastAPI()
-
-
-import imageio_ffmpeg as ffmpeg
-from pydub import AudioSegment
-import os
-
-
-
 import pandas as pd
 import base64
 import uvicorn
 import io
-# For Speech-to-Text. You will need to install these libraries:
-# pip install SpeechRecognition pydub
 import speech_recognition as sr
 from pydub import AudioSegment
 from PIL import Image
 import requests
 import re
+import os
+import glob
 from typing import Annotated, Optional
 from typing_extensions import TypedDict
 from langgraph.graph.message import add_messages
-from fastapi import FastAPI, UploadFile, File
+from fastapi import FastAPI, UploadFile, File, Depends, HTTPException, Form, Body
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langgraph.graph import StateGraph, START, END
-#import os
 from langchain_core.tools import tool
 from langgraph.prebuilt import ToolNode, tools_condition
 from tavily import TavilyClient
-# Change your FastAPI import to this:
+from dotenv import load_dotenv 
+from langchain_core.messages import SystemMessage, HumanMessage
+import imageio_ffmpeg as ffmpeg
 
-#from langchain_tavily  import TavilySearchResults
-#from dotenv import load_dotenv 
-import glob
-#load_dotenv()
+# 1. CRITICAL: Initialize nest_asyncio and FastAPI at the TOP
+nest_asyncio.apply()
+app = FastAPI()
 
-# Fix for Windows path length limit (MAX_PATH 260 characters)
-# Set a shorter cache directory for Kagglehub to prevent FileNotFoundError on deep paths
-
-
-
-from fastapi.middleware.cors import CORSMiddleware
+# Point pydub to the ffmpeg binary provided by imageio-ffmpeg
+AudioSegment.converter = ffmpeg.get_ffmpeg_exe()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"], # Allow any frontend to connect (ideal for exhibitions)
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
+load_dotenv()
 
+IS_VERCEL = "VERCEL" in os.environ
 
-#os.environ["KAGGLEHUB_CACHE"] = os.path.join(os.path.expanduser("~"), ".khub")
-#import kagglehub
-import os
-
-
-# This tells pydub exactly where the imageio-ffmpeg binary is located
-AudioSegment.converter = ffmpeg.get_ffmpeg_exe()
+if not IS_VERCEL:
+    # This block ONLY runs on your local computer
+    os.environ["KAGGLEHUB_CACHE"] = os.path.join(os.path.expanduser("~"), ".khub")
+    import kagglehub
+    print("Syncing Agricultural Datasets (Local Mode)...")
+    paths = {
+        "guava": r"C:\Users\A\.khub\datasets\shuvokumarbasak4004\guava-fruit-and-leaf-diseases-data-latest-and-updated",
+        "rose": r"C:\Users\A\.khub\datasets\shuvokumarbasak4004\rose-leaf-disease-dataset",
+        "neem": r"C:\Users\A\.khub\datasets\vidyahanand\neemazadirachta-indica-healthy-diseased-spectrum",
+        "aleovera": r"C:\Users\A\.khub\datasets\aleovera"
+    }
+else:
+    # This block runs on Vercel
+    print("Running on Vercel: Using relative data paths.")
+    paths = {
+        "guava": "./data/guava",
+        "neem": "./data/neem",
+        "rose": "./data/rose",
+        "aleovera": "./data/aleovera"
+    }
 
 # Download all datasets and store their paths
 #print("Syncing Agricultural Datasets...")
