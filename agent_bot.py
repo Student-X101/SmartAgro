@@ -1413,8 +1413,7 @@ async def crop_production_page(data: CropProductionRequest):
 @app.post("/feature/scanner")
 async def disease_page(
     file: UploadFile = File(...), 
-    plant_type: str = Form(...))
-):
+    plant_type: str = Form(...)):
     """
     Accepts an image and the plant category. Returns disease ID and local remedy.
     """
