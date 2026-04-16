@@ -1,3 +1,10 @@
+from fastapi import FastAPI, Depends, HTTPException, Form, UploadFile, File, Body
+
+nest_asyncio.apply()
+app = FastAPI()
+
+
+
 import imageio_ffmpeg as ffmpeg
 from pydub import AudioSegment
 import os
@@ -27,7 +34,7 @@ from langchain_core.tools import tool
 from langgraph.prebuilt import ToolNode, tools_condition
 from tavily import TavilyClient
 # Change your FastAPI import to this:
-from fastapi import FastAPI, Depends, HTTPException, Form, UploadFile, File, Body
+
 #from langchain_tavily  import TavilySearchResults
 #from dotenv import load_dotenv 
 import glob
@@ -35,9 +42,6 @@ import glob
 
 # Fix for Windows path length limit (MAX_PATH 260 characters)
 # Set a shorter cache directory for Kagglehub to prevent FileNotFoundError on deep paths
-
-nest_asyncio.apply()
-app = FastAPI()
 
 
 
