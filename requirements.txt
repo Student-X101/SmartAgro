@@ -1,5 +1,5 @@
+imageio-ffmpeg
 gspread
-oauth2client
 aiohappyeyeballs
 aiohttp
 aiosignal
