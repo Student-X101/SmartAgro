@@ -67,20 +67,21 @@ import os
 AudioSegment.converter = ffmpeg.get_ffmpeg_exe()
 
 # Download all datasets and store their paths
-print("Syncing Agricultural Datasets...")
+#print("Syncing Agricultural Datasets...")
 
-paths = {
+#paths = {
   #  "guava": kagglehub.dataset_download("shuvokumarbasak4004/guava-fruit-and-leaf-diseases-data-latest-and-updated"),
    # "rose": kagglehub.dataset_download("shuvokumarbasak4004/rose-leaf-disease-dataset"),
    # "neem": kagglehub.dataset_download("vidyahanand/neemazadirachta-indica-healthy-diseased-spectrum")
    # "guava": "C:\Users\A\.khub\datasets\shuvokumarbasak4004\guava-fruit-and-leaf-diseases-data-latest-and-updated",
    # "rose": "C:\Users\A\.khub\datasets\shuvokumarbasak4004\rose-leaf-disease-dataset",
    # "neem": "C:\Users\A\.khub\datasets\vidyahanand\neemazadirachta-indica-healthy-diseased-spectrum"
-    "guava": r"C:\Users\A\.khub\datasets\shuvokumarbasak4004\guava-fruit-and-leaf-diseases-data-latest-and-updated",
-    "rose": r"C:\Users\A\.khub\datasets\shuvokumarbasak4004\rose-leaf-disease-dataset",
-    "neem": r"C:\Users\A\.khub\datasets\vidyahanand\neemazadirachta-indica-healthy-diseased-spectrum",
-    "aleovera": r"C:\Users\A\.khub\datasets\aleovera"
-    }
+   # "guava": r"C:\Users\A\.khub\datasets\shuvokumarbasak4004\guava-fruit-and-leaf-diseases-data-latest-and-updated",
+   # "rose": r"C:\Users\A\.khub\datasets\shuvokumarbasak4004\rose-leaf-disease-dataset",
+   # "neem": r"C:\Users\A\.khub\datasets\vidyahanand\neemazadirachta-indica-healthy-diseased-spectrum",
+   # "aleovera": r"C:\Users\A\.khub\datasets\aleovera"
+    
+#}
 
 
 #for plant, path in paths.items():
@@ -541,7 +542,12 @@ def hybrid_remedy_expert(plant_name: str, disease_name: str):
     d_name = disease_name.lower()
 
     # --- TIER 1: LOCAL CSV ---
-    df = pd.read_csv("data/plants_info.csv")
+    # SAFE CSV LOADING
+    try:
+        df = pd.read_csv("data/plants_info.csv")
+        # ... (matching logic) ...
+    except Exception as e:
+        print(f"Data Warning: CSV not found or unreadable: {e}"
     # Make matching more flexible: check if the disease from the CSV is *contained within* the disease name from the LLM.
     # This handles cases where the LLM passes "guava wilt" but the CSV just has "wilt".
     match = df[(df['urdu_name'].str.lower() == p_name) &
