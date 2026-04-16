@@ -2,8 +2,6 @@ import imageio_ffmpeg as ffmpeg
 from pydub import AudioSegment
 import os
 
-# This tells pydub exactly where the imageio-ffmpeg binary is located
-AudioSegment.converter = ffmpeg.get_ffmpeg_exe()
 
 import nest_asyncio
 import pandas as pd
@@ -24,22 +22,23 @@ from fastapi import FastAPI, UploadFile, File
 from pydantic import BaseModel
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langgraph.graph import StateGraph, START, END
-import os
+#import os
 from langchain_core.tools import tool
 from langgraph.prebuilt import ToolNode, tools_condition
 from tavily import TavilyClient
 # Change your FastAPI import to this:
 from fastapi import FastAPI, Depends, HTTPException, Form, UploadFile, File, Body
 #from langchain_tavily  import TavilySearchResults
-from dotenv import load_dotenv 
+#from dotenv import load_dotenv 
 import glob
-load_dotenv()
+#load_dotenv()
 
 # Fix for Windows path length limit (MAX_PATH 260 characters)
 # Set a shorter cache directory for Kagglehub to prevent FileNotFoundError on deep paths
 
 nest_asyncio.apply()
 app = FastAPI()
+
 
 
 from fastapi.middleware.cors import CORSMiddleware
@@ -57,6 +56,10 @@ app.add_middleware(
 #os.environ["KAGGLEHUB_CACHE"] = os.path.join(os.path.expanduser("~"), ".khub")
 #import kagglehub
 import os
+
+
+# This tells pydub exactly where the imageio-ffmpeg binary is located
+AudioSegment.converter = ffmpeg.get_ffmpeg_exe()
 
 # Download all datasets and store their paths
 print("Syncing Agricultural Datasets...")
