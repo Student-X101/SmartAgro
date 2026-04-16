@@ -1,3 +1,10 @@
+import imageio_ffmpeg as ffmpeg
+from pydub import AudioSegment
+import os
+
+# This tells pydub exactly where the imageio-ffmpeg binary is located
+AudioSegment.converter = ffmpeg.get_ffmpeg_exe()
+
 import nest_asyncio
 import pandas as pd
 import base64
@@ -936,7 +943,7 @@ class IrrigationRequest(BaseModel):
 #===========================================================================================================================
 # --- REMOTE ENDPOINTS FOR TEAMMATES ---
 @app.post("/feature/weather")
-async def weather_page(data: LocationRequest, db: Session = Depends(get_db)):
+async def weather_page(data: LocationRequest):
     # 1. Direct Instruction: The agent just needs to call the tool with the city name
     #prompt = (
     #    f"The user wants a weather report for '{data.location_name}'. "
@@ -1031,7 +1038,7 @@ async def weather_page(data: LocationRequest, db: Session = Depends(get_db)):
 import pandas as pd
 
 @app.post("/ask-text")
-async def ask_text(prompt: str, db: Session = Depends(get_db)):
+async def ask_text(prompt: str)):
     # 1. DIRECT DATA INJECTION (Crop CSV & Disease Handbook Context)
     bonus_context = ""
     
@@ -1105,7 +1112,7 @@ async def ask_text(prompt: str, db: Session = Depends(get_db)):
 from fastapi import UploadFile, File
 
 @app.post("/ask-voice")
-async def ask_voice(file: UploadFile = File(...), db: Session = Depends(get_db)):
+async def ask_voice(file: UploadFile = File(...)):
     """
     Receives an audio file, transcribes it to text, and sends the text to the Agri-AI agent.
     NOTE: This requires 'ffmpeg' to be installed on the system for audio conversion.
@@ -1185,7 +1192,7 @@ async def ask_voice(file: UploadFile = File(...), db: Session = Depends(get_db))
         return {"status": "error", "message": f"An unexpected error occurred: {str(e)}"}
 
 @app.post("/feature/irrigation")
-async def irrigation_page(data: IrrigationRequest, db: Session = Depends(get_db)):
+async def irrigation_page(data: IrrigationRequest):#, db: Session = Depends(get_db)
     # 1. Force the Agent to use the new tool
     #prompt = (
     #    f"Use the 'get_irrigation_advice' tool for crop_type='{data.crop_type}', "
@@ -1282,7 +1289,7 @@ async def irrigation_page(data: IrrigationRequest, db: Session = Depends(get_db)
     #return {"status": "success", "recommendation": final_answer}
 
 @app.post("/feature/soil-analysis")
-async def soil_analysis_page(data: SoilAnalysisRequest, db: Session = Depends(get_db)):
+async def soil_analysis_page(data: SoilAnalysisRequest):#, db: Session = Depends(get_db)
     # 1. Direct Tool-Based Prompt
     prompt = (
         f"CRITICAL INSTRUCTION: Analyze a {data.soil_type} soil sample with {data.moisture_level}% moisture. "
@@ -1351,7 +1358,7 @@ async def soil_analysis_page(data: SoilAnalysisRequest, db: Session = Depends(ge
  #   return {"status": "success", "recommendation": final_answer}
 
 @app.post("/feature/crop-production")
-async def crop_production_page(data: CropProductionRequest, db: Session = Depends(get_db)):
+async def crop_production_page(data: CropProductionRequest):
     # 1. Direct Tool-Based Prompt
     #prompt = (
     #    f"Use the 'boost_crop_production' tool for plant_type='{data.plant_type}', "
@@ -1393,8 +1400,7 @@ async def crop_production_page(data: CropProductionRequest, db: Session = Depend
 @app.post("/feature/scanner")
 async def disease_page(
     file: UploadFile = File(...), 
-    plant_type: str = Form(...), # Added plant_type as a form field
-    db: Session = Depends(get_db)
+    plant_type: str = Form(...))
 ):
     """
     Accepts an image and the plant category. Returns disease ID and local remedy.
@@ -1446,7 +1452,7 @@ async def disease_page(
 
     
 @app.get("/")
-async def root(db: Session = Depends(get_db)):
+async def root():
     #try:
         # Try a simple query to see if the external DB is alive
         #db.execute(text("SELECT 1")) 
@@ -1493,7 +1499,7 @@ async def root(db: Session = Depends(get_db)):
 
 
 @app.get("/db-status")
-async def check_status(db: Session = Depends(get_db)):
+async def check_status():
     # Check Local DB
     #local_count = db.query(AgriHistory).count()
     #try:
