@@ -1,8 +1,9 @@
 from fastapi import FastAPI, Depends, HTTPException, Form, UploadFile, File, Body
-
+import nest_asyncio
 nest_asyncio.apply()
-app = FastAPI()
-
+#app = FastAPI()
+# Force-mapping for Vercel's discovery engine
+application = app = handler = FastAPI()
 
 
 import imageio_ffmpeg as ffmpeg
@@ -10,7 +11,7 @@ from pydub import AudioSegment
 import os
 
 
-import nest_asyncio
+
 import pandas as pd
 import base64
 import uvicorn
