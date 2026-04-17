@@ -67,7 +67,7 @@ model_2 = ChatGoogleGenerativeAI(model="gemini-2.5-flash-lite", google_api_key=s
 llm = model_1.with_fallbacks([model_2])
 
 # 1. This object contains the "Brain" (Model 1) and the "Backup" (Model 2)
-llm = model_1.with_fallbacks([model_2])
+#llm = model_1.with_fallbacks([model_2])
 
 def get_llm_response(prompt):
     try:
@@ -1496,8 +1496,8 @@ if __name__ == "__main__":
     print("🌾 SMARTAGRO SERVER IS STARTING 🌾")
     print("Click here to test: http://127.0.0.1:8000/docs")
     print("="*50 + "\n")
-    port = int(os.environ.get("PORT", 8000)) 
-    uvicorn.run(app, host="0.0.0.0", port=port)
+    #port = int(os.environ.get("PORT", 8000)) 
+    #uvicorn.run(app, host="0.0.0.0", port=port)
     #uvicorn agent_bot:app --host 0.0.0.0 --port ${PORT}
     #uvicorn.run(app, host="0.0.0.0", port=8000)
     
