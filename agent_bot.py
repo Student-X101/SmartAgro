@@ -1465,7 +1465,7 @@ async def get_farming_history(db: Session = Depends(get_db)):
 
 
 @app.get("/db-status")
-async def check_status():
+async def check_status(db: Session = Depends(get_db)):
     # Check Local DB
     local_count = db.query(AgriHistory).count()
     try:
