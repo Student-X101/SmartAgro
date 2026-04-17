@@ -522,7 +522,7 @@ def hybrid_remedy_expert(plant_name: str, disease_name: str):
     "toot/mulberry":"./data/toot",
     "Euphorbia":"./data/Euphorbia",
     "Java Plum":"./data/Java Plum",
-    "Jasmine":"./data/jasmine"
+    "Jasmine":"./data/jasmine",
     }
  
  
@@ -1496,7 +1496,9 @@ if __name__ == "__main__":
     print("🌾 SMARTAGRO SERVER IS STARTING 🌾")
     print("Click here to test: http://127.0.0.1:8000/docs")
     print("="*50 + "\n")
-    uvicorn agent_bot:app --host 0.0.0.0 --port ${PORT}
+    port = int(os.environ.get("PORT", 8000)) 
+    uvicorn.run(app, host="0.0.0.0", port=port)
+    #uvicorn agent_bot:app --host 0.0.0.0 --port ${PORT}
     #uvicorn.run(app, host="0.0.0.0", port=8000)
     
     
