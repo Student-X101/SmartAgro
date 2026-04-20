@@ -56,7 +56,7 @@ Sufaida,High,51-100% (High),Maintain current management.,Harvest at 5-7 years fo
 Aloe Vera,Low,0-50% (Low),Apply NPK 20-20-20 fertilizer.,Use sandy soil mix for maximum root health.,6.0-8.5,Aloe Vera needs a nutrient boost to increase yield.
 Aloe Vera,Low,51-100% (High),Apply NPK 20-20-20 fertilizer.,Use sandy soil mix for maximum root health.,6.0-8.5,Aloe Vera needs a nutrient boost to increase yield.
 Aloe Vera,Medium,0-50% (Low),Repair irrigation leaks.,Harvest older outer leaves first.,6.0-8.5,Repair pipes to save 30% more water for production.
-Aloe Vera,Medium,51-100% (High),Maintain current management.,Separate "pups" (offshoots) to prevent crowding.,6.0-8.5,Excellent management. Aloe Vera is on track for maximum production.
+Aloe Vera,Medium,51-100% (High),Maintain current management.,Separate pups (offshoots) to prevent crowding.,6.0-8.5,Excellent management. Aloe Vera is on track for maximum production.
 Aloe Vera,High,0-50% (Low),Repair irrigation leaks.,Harvest older outer leaves first.,6.0-8.5,Repair pipes to save 30% more water for production.
 Aloe Vera,High,51-100% (High),Maintain current management.,Separate "pups" (offshoots) to prevent crowding.,6.0-8.5,Excellent management. Aloe Vera is on track for maximum production.
 Rabail/Jasmine,Low,0-50% (Low),Apply NPK 20-20-20 fertilizer.,Support with a trellis for better sun exposure.,6.0-7.5,Rabail/Jasmine needs a nutrient boost to increase yield.
@@ -77,3 +77,33 @@ Java Plum,Medium,0-50% (Low),Repair irrigation leaks.,Mulch to maintain cool roo
 Java Plum,Medium,51-100% (High),Maintain current management.,Avoid excess nitrogen during fruit ripening.,5.5-7.5,Excellent management. Java Plum is on track for maximum production.
 Java Plum,High,0-50% (Low),Repair irrigation leaks.,Mulch to maintain cool root temperatures.,5.5-7.5,Repair pipes to save 30% more water for production.
 Java Plum,High,51-100% (High),Maintain current management.,Avoid excess nitrogen during fruit ripening.,5.5-7.5,Excellent management. Java Plum is on track for maximum production.
+Wheat,Low,0-50% (Low),Apply NPK 20-20-20 fertilizer.,Add gypsum to improve soil structure.,6.0-7.5,Wheat needs a nutrient boost to increase yield.
+Wheat,Low,51-100% (High),Apply NPK 20-20-20 fertilizer.,Add gypsum to improve soil structure.,6.0-7.5,Wheat needs a nutrient boost to increase yield.
+Wheat,Medium,0-50% (Low),Repair irrigation leaks.,Apply split nitrogen doses.,6.0-7.5,Repair pipes to save 30% more water for production.
+Wheat,Medium,51-100% (High),Maintain current management.,Use seed treatment for smut prevention.,6.0-7.5,Excellent management. Wheat is on track for maximum production.
+Wheat,High,0-50% (Low),Repair irrigation leaks.,Apply split nitrogen doses.,6.0-7.5,Repair pipes to save 30% more water for production.
+Wheat,High,51-100% (High),Maintain current management.,Use seed treatment for smut prevention.,6.0-7.5,Excellent management. Wheat is on track for maximum production.
+Sugarcane,Low,0-50% (Low),Apply NPK 20-20-20 fertilizer.,Trash mulching to conserve moisture.,6.5-8.0,Sugarcane needs a nutrient boost to increase yield.
+Sugarcane,Low,51-100% (High),Apply NPK 20-20-20 fertilizer.,Trash mulching to conserve moisture.,6.5-8.0,Sugarcane needs a nutrient boost to increase yield.
+Sugarcane,Medium,0-50% (Low),Repair irrigation leaks.,Intercrop with pulses for soil health.,6.5-8.0,Repair pipes to save 30% more water for production.
+Sugarcane,Medium,51-100% (High),Maintain current management.,Earthing up to prevent lodging.,6.5-8.0,Excellent management. Sugarcane is on track for maximum production.
+Sugarcane,High,0-50% (Low),Repair irrigation leaks.,Intercrop with pulses for soil health.,6.5-8.0,Repair pipes to save 30% more water for production.
+Sugarcane,High,51-100% (High),Maintain current management.,Earthing up to prevent lodging.,6.5-8.0,Excellent management. Sugarcane is on track for maximum production.
+Rice,Low,0-50% (Low),Apply NPK 20-20-20 fertilizer.,Apply Zinc Sulfate for Khaira disease prevention.,5.5-7.0,Rice needs a nutrient boost to increase yield.
+Rice,Low,51-100% (High),Apply NPK 20-20-20 fertilizer.,Apply Zinc Sulfate for Khaira disease prevention.,5.5-7.0,Rice needs a nutrient boost to increase yield.
+Rice,Medium,0-50% (Low),Repair irrigation leaks.,Green manuring with Sesbania.,5.5-7.0,Repair pipes to save 30% more water for production.
+Rice,Medium,51-100% (High),Maintain current management.,Alternate Wetting and Drying (AWD) technique.,5.5-7.0,Excellent management. Rice is on track for maximum production.
+Rice,High,0-50% (Low),Repair irrigation leaks.,Green manuring with Sesbania.,5.5-7.0,Repair pipes to save 30% more water for production.
+Rice,High,51-100% (High),Maintain current management.,Alternate Wetting and Drying (AWD) technique.,5.5-7.0,Excellent management. Rice is on track for maximum production.
+Cotton,Low,0-50% (Low),Apply NPK 20-20-20 fertilizer.,Foliar spray of Potassium Nitrate.,5.8-8.0,Cotton needs a nutrient boost to increase yield.
+Cotton,Low,51-100% (High),Apply NPK 20-20-20 fertilizer.,Foliar spray of Potassium Nitrate.,5.8-8.0,Cotton needs a nutrient boost to increase yield.
+Cotton,Medium,0-50% (Low),Repair irrigation leaks.,Growth regulator spray for better boll set.,5.8-8.0,Repair pipes to save 30% more water for production.
+Cotton,Medium,51-100% (High),Maintain current management.,Pheromone traps for pest monitoring.,5.8-8.0,Excellent management. Cotton is on track for maximum production.
+Cotton,High,0-50% (Low),Repair irrigation leaks.,Growth regulator spray for better boll set.,5.8-8.0,Repair pipes to save 30% more water for production.
+Cotton,High,51-100% (High),Maintain current management.,Pheromone traps for pest monitoring.,5.8-8.0,Excellent management. Cotton is on track for maximum production.
+Maize,Low,0-50% (Low),Apply NPK 20-20-20 fertilizer.,Enrich soil with poultry manure.,5.5-7.5,Maize needs a nutrient boost to increase yield.
+Maize,Low,51-100% (High),Apply NPK 20-20-20 fertilizer.,Enrich soil with poultry manure.,5.5-7.5,Maize needs a nutrient boost to increase yield.
+Maize,Medium,0-50% (Low),Repair irrigation leaks.,Crop rotation with leguminous plants.,5.5-7.5,Repair pipes to save 30% more water for production.
+Maize,Medium,51-100% (High),Maintain current management.,Precision placement of fertilizer near roots.,5.5-7.5,Excellent management. Maize is on track for maximum production.
+Maize,High,0-50% (Low),Repair irrigation leaks.,Crop rotation with leguminous plants.,5.5-7.5,Repair pipes to save 30% more water for production.
+Maize,High,51-100% (High),Maintain current management.,Precision placement of fertilizer near roots.,5.5-7.5,Excellent management. Maize is on track for maximum production.
