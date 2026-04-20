@@ -1,0 +1,118 @@
+soil_moisture,temperature,plant_type,water_requirement,critical_stage,status,warning,recommendation
+1-30 (Dry),0-20 (Cool),Kachnar,Moderate,Growth,Thirsty,Water during daylight hours.,Standard irrigation for Kachnar.
+1-30 (Dry),0-20 (Cool),Thuja,Moderate,Growth,Thirsty,Water during daylight hours.,Standard irrigation for Thuja.
+1-30 (Dry),0-20 (Cool),Rose,Moderate,Budding,Thirsty,Water during daylight hours.,Standard irrigation for Rose.
+1-30 (Dry),0-20 (Cool),Euphorbia,Low,Growth,Stable,Water during daylight hours.,Standard irrigation for Euphorbia.
+1-30 (Dry),0-20 (Cool),Guava,Moderate,Fruit Setting,Thirsty,Water during daylight hours.,Standard irrigation for Guava.
+1-30 (Dry),0-20 (Cool),Neem,Moderate,Growth,Thirsty,Water during daylight hours.,Standard irrigation for Neem.
+1-30 (Dry),0-20 (Cool),Sheesham,Moderate,Growth,Thirsty,Water during daylight hours.,Standard irrigation for Sheesham.
+1-30 (Dry),0-20 (Cool),Rubber Tree,Moderate,Growth,Thirsty,Water during daylight hours.,Standard irrigation for Rubber Tree.
+1-30 (Dry),0-20 (Cool),Sufaida,Moderate,Growth,Thirsty,Water during daylight hours.,Standard irrigation for Sufaida.
+1-30 (Dry),0-20 (Cool),Aloe Vera,Low,Growth,Stable,Water during daylight hours.,Standard irrigation for Aloe Vera.
+1-30 (Dry),0-20 (Cool),Rabail/Jasmine,Moderate,Budding,Thirsty,Water during daylight hours.,Standard irrigation for Rabail/Jasmine.
+1-30 (Dry),0-20 (Cool),Toot,Moderate,Fruit Setting,Thirsty,Water during daylight hours.,Standard irrigation for Toot.
+1-30 (Dry),0-20 (Cool),Java Plum,Moderate,Fruit Setting,Thirsty,Water during daylight hours.,Standard irrigation for Java Plum.
+1-30 (Dry),21-35 (Mild),Kachnar,High,Growth,Thirsty,Soil is dry; water soon.,Standard irrigation for Kachnar.
+1-30 (Dry),21-35 (Mild),Thuja,High,Growth,Thirsty,Soil is dry; water soon.,Standard irrigation for Thuja.
+1-30 (Dry),21-35 (Mild),Rose,High,Budding,Thirsty,Soil is dry; water soon.,Standard irrigation for Rose.
+1-30 (Dry),21-35 (Mild),Euphorbia,Low,Growth,Stable,Soil is dry; water soon.,Standard irrigation for Euphorbia.
+1-30 (Dry),21-35 (Mild),Guava,High,Fruit Setting,Thirsty,Soil is dry; water soon.,Standard irrigation for Guava.
+1-30 (Dry),21-35 (Mild),Neem,High,Growth,Thirsty,Soil is dry; water soon.,Standard irrigation for Neem.
+1-30 (Dry),21-35 (Mild),Sheesham,High,Growth,Thirsty,Soil is dry; water soon.,Standard irrigation for Sheesham.
+1-30 (Dry),21-35 (Mild),Rubber Tree,High,Growth,Thirsty,Soil is dry; water soon.,Standard irrigation for Rubber Tree.
+1-30 (Dry),21-35 (Mild),Sufaida,High,Growth,Thirsty,Soil is dry; water soon.,Standard irrigation for Sufaida.
+1-30 (Dry),21-35 (Mild),Aloe Vera,Low,Growth,Stable,Soil is dry; water soon.,Standard irrigation for Aloe Vera.
+1-30 (Dry),21-35 (Mild),Rabail/Jasmine,High,Budding,Thirsty,Soil is dry; water soon.,Standard irrigation for Rabail/Jasmine.
+1-30 (Dry),21-35 (Mild),Toot,High,Fruit Setting,Thirsty,Soil is dry; water soon.,Standard irrigation for Toot.
+1-30 (Dry),21-35 (Mild),Java Plum,High,Fruit Setting,Thirsty,Soil is dry; water soon.,Standard irrigation for Java Plum.
+1-30 (Dry),36-50 (Hot),Kachnar,Very High,Growth,Heat Stress,Irrigate early morning only.,Critical heat stress. Irrigate early morning.
+1-30 (Dry),36-50 (Hot),Thuja,Very High,Growth,Heat Stress,Irrigate early morning only.,Critical heat stress. Irrigate early morning.
+1-30 (Dry),36-50 (Hot),Rose,Very High,Budding,Heat Stress,Irrigate early morning only.,Critical heat stress. Irrigate early morning.
+1-30 (Dry),36-50 (Hot),Euphorbia,Low,Growth,Stable,Irrigate early morning only.,Critical heat stress. Irrigate early morning.
+1-30 (Dry),36-50 (Hot),Guava,Very High,Fruit Setting,Heat Stress,Irrigate early morning only.,Critical heat stress. Irrigate early morning.
+1-30 (Dry),36-50 (Hot),Neem,Very High,Growth,Heat Stress,Irrigate early morning only.,Critical heat stress. Irrigate early morning.
+1-30 (Dry),36-50 (Hot),Sheesham,Very High,Growth,Heat Stress,Irrigate early morning only.,Critical heat stress. Irrigate early morning.
+1-30 (Dry),36-50 (Hot),Rubber Tree,Very High,Growth,Heat Stress,Irrigate early morning only.,Critical heat stress. Irrigate early morning.
+1-30 (Dry),36-50 (Hot),Sufaida,Very High,Growth,Heat Stress,Irrigate early morning only.,Critical heat stress. Irrigate early morning.
+1-30 (Dry),36-50 (Hot),Aloe Vera,Low,Growth,Stable,Irrigate early morning only.,Critical heat stress. Irrigate early morning.
+1-30 (Dry),36-50 (Hot),Rabail/Jasmine,Very High,Budding,Heat Stress,Irrigate early morning only.,Critical heat stress. Irrigate early morning.
+1-30 (Dry),36-50 (Hot),Toot,Very High,Fruit Setting,Heat Stress,Irrigate early morning only.,Critical heat stress. Irrigate early morning.
+1-30 (Dry),36-50 (Hot),Java Plum,Very High,Fruit Setting,Heat Stress,Irrigate early morning only.,Critical heat stress. Irrigate early morning.
+31-70 (Optimal),0-20 (Cool),Kachnar,Moderate,Growth,Healthy,Maintain current schedule.,Standard irrigation for Kachnar.
+31-70 (Optimal),0-20 (Cool),Thuja,Moderate,Growth,Healthy,Maintain current schedule.,Standard irrigation for Thuja.
+31-70 (Optimal),0-20 (Cool),Rose,Moderate,Budding,Healthy,Maintain current schedule.,Standard irrigation for Rose.
+31-70 (Optimal),0-20 (Cool),Euphorbia,Low,Growth,Healthy,Maintain current schedule.,Standard irrigation for Euphorbia.
+31-70 (Optimal),0-20 (Cool),Guava,Moderate,Fruit Setting,Healthy,Maintain current schedule.,Standard irrigation for Guava.
+31-70 (Optimal),0-20 (Cool),Neem,Moderate,Growth,Healthy,Maintain current schedule.,Standard irrigation for Neem.
+31-70 (Optimal),0-20 (Cool),Sheesham,Moderate,Growth,Healthy,Maintain current schedule.,Standard irrigation for Sheesham.
+31-70 (Optimal),0-20 (Cool),Rubber Tree,Moderate,Growth,Healthy,Maintain current schedule.,Standard irrigation for Rubber Tree.
+31-70 (Optimal),0-20 (Cool),Sufaida,Moderate,Growth,Healthy,Maintain current schedule.,Standard irrigation for Sufaida.
+31-70 (Optimal),0-20 (Cool),Aloe Vera,Low,Growth,Healthy,Maintain current schedule.,Standard irrigation for Aloe Vera.
+31-70 (Optimal),0-20 (Cool),Rabail/Jasmine,Moderate,Budding,Healthy,Maintain current schedule.,Standard irrigation for Rabail/Jasmine.
+31-70 (Optimal),0-20 (Cool),Toot,Moderate,Fruit Setting,Healthy,Maintain current schedule.,Standard irrigation for Toot.
+31-70 (Optimal),0-20 (Cool),Java Plum,Moderate,Fruit Setting,Healthy,Maintain current schedule.,Standard irrigation for Java Plum.
+31-70 (Optimal),21-35 (Mild),Kachnar,Moderate,Growth,Healthy,Maintain current schedule.,Standard irrigation for Kachnar.
+31-70 (Optimal),21-35 (Mild),Thuja,Moderate,Growth,Healthy,Maintain current schedule.,Standard irrigation for Thuja.
+31-70 (Optimal),21-35 (Mild),Rose,Moderate,Budding,Healthy,Maintain current schedule.,Standard irrigation for Rose.
+31-70 (Optimal),21-35 (Mild),Euphorbia,Low,Growth,Healthy,Maintain current schedule.,Standard irrigation for Euphorbia.
+31-70 (Optimal),21-35 (Mild),Guava,Moderate,Fruit Setting,Healthy,Maintain current schedule.,Standard irrigation for Guava.
+31-70 (Optimal),21-35 (Mild),Neem,Moderate,Growth,Healthy,Maintain current schedule.,Standard irrigation for Neem.
+31-70 (Optimal),21-35 (Mild),Sheesham,Moderate,Growth,Healthy,Maintain current schedule.,Standard irrigation for Sheesham.
+31-70 (Optimal),21-35 (Mild),Rubber Tree,Moderate,Growth,Healthy,Maintain current schedule.,Standard irrigation for Rubber Tree.
+31-70 (Optimal),21-35 (Mild),Sufaida,Moderate,Growth,Healthy,Maintain current schedule.,Standard irrigation for Sufaida.
+31-70 (Optimal),21-35 (Mild),Aloe Vera,Low,Growth,Healthy,Maintain current schedule.,Standard irrigation for Aloe Vera.
+31-70 (Optimal),21-35 (Mild),Rabail/Jasmine,Moderate,Budding,Healthy,Maintain current schedule.,Standard irrigation for Rabail/Jasmine.
+31-70 (Optimal),21-35 (Mild),Toot,Moderate,Fruit Setting,Healthy,Maintain current schedule.,Standard irrigation for Toot.
+31-70 (Optimal),21-35 (Mild),Java Plum,Moderate,Fruit Setting,Healthy,Maintain current schedule.,Standard irrigation for Java Plum.
+31-70 (Optimal),36-50 (Hot),Kachnar,Moderate,Growth,Healthy,Maintain current schedule.,Standard irrigation for Kachnar.
+31-70 (Optimal),36-50 (Hot),Thuja,Moderate,Growth,Healthy,Maintain current schedule.,Standard irrigation for Thuja.
+31-70 (Optimal),36-50 (Hot),Rose,Moderate,Budding,Healthy,Maintain current schedule.,Standard irrigation for Rose.
+31-70 (Optimal),36-50 (Hot),Euphorbia,Low,Growth,Healthy,Maintain current schedule.,Standard irrigation for Euphorbia.
+31-70 (Optimal),36-50 (Hot),Guava,Moderate,Fruit Setting,Healthy,Maintain current schedule.,Standard irrigation for Guava.
+31-70 (Optimal),36-50 (Hot),Neem,Moderate,Growth,Healthy,Maintain current schedule.,Standard irrigation for Neem.
+31-70 (Optimal),36-50 (Hot),Sheesham,Moderate,Growth,Healthy,Maintain current schedule.,Standard irrigation for Sheesham.
+31-70 (Optimal),36-50 (Hot),Rubber Tree,Moderate,Growth,Healthy,Maintain current schedule.,Standard irrigation for Rubber Tree.
+31-70 (Optimal),36-50 (Hot),Sufaida,Moderate,Growth,Healthy,Maintain current schedule.,Standard irrigation for Sufaida.
+31-70 (Optimal),36-50 (Hot),Aloe Vera,Low,Growth,Healthy,Maintain current schedule.,Standard irrigation for Aloe Vera.
+31-70 (Optimal),36-50 (Hot),Rabail/Jasmine,Moderate,Budding,Healthy,Maintain current schedule.,Standard irrigation for Rabail/Jasmine.
+31-70 (Optimal),36-50 (Hot),Toot,Moderate,Fruit Setting,Healthy,Maintain current schedule.,Standard irrigation for Toot.
+31-70 (Optimal),36-50 (Hot),Java Plum,Moderate,Fruit Setting,Healthy,Maintain current schedule.,Standard irrigation for Java Plum.
+71-100 (Saturated),0-20 (Cool),Kachnar,None,Growth,Waterlogged,Risk of fungal infection.,Standard irrigation for Kachnar.
+71-100 (Saturated),0-20 (Cool),Thuja,None,Growth,Waterlogged,Risk of fungal infection.,Standard irrigation for Thuja.
+71-100 (Saturated),0-20 (Cool),Rose,None,Budding,Waterlogged,Risk of fungal infection.,Standard irrigation for Rose.
+71-100 (Saturated),0-20 (Cool),Euphorbia,None,Growth,Waterlogged,Risk of fungal infection.,Standard irrigation for Euphorbia.
+71-100 (Saturated),0-20 (Cool),Guava,None,Fruit Setting,Waterlogged,Risk of fungal infection.,Standard irrigation for Guava.
+71-100 (Saturated),0-20 (Cool),Neem,None,Growth,Waterlogged,Risk of fungal infection.,Standard irrigation for Neem.
+71-100 (Saturated),0-20 (Cool),Sheesham,None,Growth,Waterlogged,Risk of fungal infection.,Standard irrigation for Sheesham.
+71-100 (Saturated),0-20 (Cool),Rubber Tree,None,Growth,Waterlogged,Risk of fungal infection.,Standard irrigation for Rubber Tree.
+71-100 (Saturated),0-20 (Cool),Sufaida,None,Growth,Waterlogged,Risk of fungal infection.,Standard irrigation for Sufaida.
+71-100 (Saturated),0-20 (Cool),Aloe Vera,None,Growth,Waterlogged,Risk of fungal infection.,Standard irrigation for Aloe Vera.
+71-100 (Saturated),0-20 (Cool),Rabail/Jasmine,None,Budding,Waterlogged,Risk of fungal infection.,Standard irrigation for Rabail/Jasmine.
+71-100 (Saturated),0-20 (Cool),Toot,None,Fruit Setting,Waterlogged,Risk of fungal infection.,Standard irrigation for Toot.
+71-100 (Saturated),0-20 (Cool),Java Plum,None,Fruit Setting,Waterlogged,Risk of fungal infection.,Standard irrigation for Java Plum.
+71-100 (Saturated),21-35 (Mild),Kachnar,None,Growth,Saturated,Ensure drainage.,Standard irrigation for Kachnar.
+71-100 (Saturated),21-35 (Mild),Thuja,None,Growth,Saturated,Ensure drainage.,Standard irrigation for Thuja.
+71-100 (Saturated),21-35 (Mild),Rose,None,Budding,Saturated,Ensure drainage.,Standard irrigation for Rose.
+71-100 (Saturated),21-35 (Mild),Euphorbia,None,Growth,Saturated,Ensure drainage.,Standard irrigation for Euphorbia.
+71-100 (Saturated),21-35 (Mild),Guava,None,Fruit Setting,Saturated,Ensure drainage.,Standard irrigation for Guava.
+71-100 (Saturated),21-35 (Mild),Neem,None,Growth,Saturated,Ensure drainage.,Standard irrigation for Neem.
+71-100 (Saturated),21-35 (Mild),Sheesham,None,Growth,Saturated,Ensure drainage.,Standard irrigation for Sheesham.
+71-100 (Saturated),21-35 (Mild),Rubber Tree,None,Growth,Saturated,Ensure drainage.,Standard irrigation for Rubber Tree.
+71-100 (Saturated),21-35 (Mild),Sufaida,None,Growth,Saturated,Ensure drainage.,Standard irrigation for Sufaida.
+71-100 (Saturated),21-35 (Mild),Aloe Vera,None,Growth,Saturated,Ensure drainage.,Standard irrigation for Aloe Vera.
+71-100 (Saturated),21-35 (Mild),Rabail/Jasmine,None,Budding,Saturated,Ensure drainage.,Standard irrigation for Rabail/Jasmine.
+71-100 (Saturated),21-35 (Mild),Toot,None,Fruit Setting,Saturated,Ensure drainage.,Standard irrigation for Toot.
+71-100 (Saturated),21-35 (Mild),Java Plum,None,Fruit Setting,Saturated,Ensure drainage.,Standard irrigation for Java Plum.
+71-100 (Saturated),36-50 (Hot),Kachnar,None,Growth,Danger,High humidity & heat risk.,Standard irrigation for Kachnar.
+71-100 (Saturated),36-50 (Hot),Thuja,None,Growth,Danger,High humidity & heat risk.,Standard irrigation for Thuja.
+71-100 (Saturated),36-50 (Hot),Rose,None,Budding,Danger,High humidity & heat risk.,Standard irrigation for Rose.
+71-100 (Saturated),36-50 (Hot),Euphorbia,None,Growth,Danger,High humidity & heat risk.,Standard irrigation for Euphorbia.
+71-100 (Saturated),36-50 (Hot),Guava,None,Fruit Setting,Danger,High humidity & heat risk.,Standard irrigation for Guava.
+71-100 (Saturated),36-50 (Hot),Neem,None,Growth,Danger,High humidity & heat risk.,Standard irrigation for Neem.
+71-100 (Saturated),36-50 (Hot),Sheesham,None,Growth,Danger,High humidity & heat risk.,Standard irrigation for Sheesham.
+71-100 (Saturated),36-50 (Hot),Rubber Tree,None,Growth,Danger,High humidity & heat risk.,Standard irrigation for Rubber Tree.
+71-100 (Saturated),36-50 (Hot),Sufaida,None,Growth,Danger,High humidity & heat risk.,Standard irrigation for Sufaida.
+71-100 (Saturated),36-50 (Hot),Aloe Vera,None,Growth,Danger,High humidity & heat risk.,Standard irrigation for Aloe Vera.
+71-100 (Saturated),36-50 (Hot),Rabail/Jasmine,None,Budding,Danger,High humidity & heat risk.,Standard irrigation for Rabail/Jasmine.
+71-100 (Saturated),36-50 (Hot),Toot,None,Fruit Setting,Danger,High humidity & heat risk.,Standard irrigation for Toot.
+71-100 (Saturated),36-50 (Hot),Java Plum,None,Fruit Setting,Danger,High humidity & heat risk.,Standard irrigation for Java Plum.
