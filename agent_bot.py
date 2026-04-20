@@ -139,7 +139,9 @@ def get_weather_by_location(location: str):
     
     REQUIRED: A specific city or area name must be provided. The function will 
     not attempt to guess the user's location.
-    
+
+    Optimized for 350px UI cards.Output must be concise: 'Short answer, full data'—meaning all metrics are 
+    included but with minimal text.
     Returns a full report including Temperature, Humidity, Rain, and Wind speed. 
     Additionally, integrates with `get_crop_calendar()` to provide a list of 
     crops to sow or reap based on the current weather conditions.
@@ -182,7 +184,7 @@ def get_weather_by_location(location: str):
             f"🌾 **Agricultural Context for {datetime.now().strftime('%B')}:**\n"
             f"- **Crops to Sow:** {crops['sow']}\n"
             f"- **Crops to Reap:** {crops['reap']}\n"
-            f"Source: Open-Meteo & Regional Crop Calendar"
+            #f"Source: Open-Meteo & Regional Crop Calendar"
             #f"🌤️ **Weather Report for {location}** ({lat}, {lon}):\n"
             #f"- Temperature: {current.get('temperature_2m')}°C\n"
             #f"- Humidity: {current.get('relative_humidity_2m')}%\n"
@@ -205,7 +207,10 @@ from langchain.tools import tool
 @tool
 def boost_crop_production(soil_fertility: str, irrigation_efficiency: str, plant_type: str ):
     """
-    Retrieves NPK, pH, and growth hacks from 'production_boost.csv'.
+    Retrieves NPK, boost_strategy, pH, and growth hacks from 'production_boost.csv'.
+    Optimized for 350px UI cards. Supports 14 varieties (5 crops, 9 plants).
+    Output must be concise: 'Short answer, full data'—meaning all metrics are 
+    included but with minimal text.
     
     Args:
         plant_type (str): Name of the crop/plant (5 crops, 9 plants available).
@@ -424,6 +429,8 @@ def detect_soil_condition(moisture_level: str, soil_type: str):
     Analyzes soil stability and drainage based on 'soil_detection.csv'.
     REQUIRED: moisture_level (a number between 0-100, e.g., '45' or '45%') and soil_type.
     Note to AI: If the user provides just a number, treat it as the moisture_level.
+    Optimized for 350px UI cards.Output must be concise: 'Short answer, full data'—meaning all metrics are 
+    included but with minimal text.
     Args:
         moisture_level: Current moisture percentage (0-100).
         soil_type: The type of soil ('Clay', 'Sandy', 'Loamy').
@@ -458,8 +465,8 @@ def detect_soil_condition(moisture_level: str, soil_type: str):
 
         return (
             f"🌱 **Soil Analysis Result**:\n"
-            f"- **Soil Type**: {soil_type_clean}\n"
-            f"- **Moisture**: {m_val}% ({moisture_cat})\n"
+            #f"- **Soil Type**: {soil_type_clean}\n"
+            #f"- **Moisture**: {m_val}% ({moisture_cat})\n"
             f"- **Drainage Score**: {final_row['drainage_score']}\n"
             f"- **Nutrient Retention**: {final_row['nutrient_retention']}\n"
             f"- **Best For**: {final_row['best_for']}\n"
@@ -521,6 +528,8 @@ def get_commodity_prices(commodity: str, location: str):
 def hybrid_remedy_expert(plant_name: str, disease_name: str):
     """
     Look up organic and chemical treatments from 'plants_info.csv'.
+    Optimized for 350px UI cards.Output must be concise: 'Short answer, full data'—meaning all metrics are 
+    included but with minimal text.
        
     CRITICAL VISUAL DIFFERENTIATION:
     - If you see DARK BROWN or BLACK CIRCULAR HOLES/SPOTS: You MUST label this as 'Leaf Spot'. 
@@ -699,6 +708,7 @@ def get_irrigation_advice(soil_moisture: str, temperature: str, crop_type: str):
         temperature (int): Current temp in °C.
         crop_type (str): Specific name (e.g., 'Wheat', 'Euphorbia').
     """
+    csv_path = "irrigation_recommendation.csv"
     #"""
     #Provides irrigation recommendations from 'irrigation_recommendation.csv'. 
     
@@ -707,7 +717,7 @@ def get_irrigation_advice(soil_moisture: str, temperature: str, crop_type: str):
         #temperature: The current temperature in Celsius.
         #crop_type: The name of the crop (e.g., 'Wheat', 'Maize', 'Rice', 'Euphorbia').
     #"""
-    csv_path = "irrigation_recommendation.csv"
+    
     
     if not os.path.exists(csv_path):
         return "The irrigation database is currently unavailable. Please provide general watering advice for this crop."
