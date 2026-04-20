@@ -696,7 +696,7 @@ from langchain.tools import tool
      #   return f"Error in irrigation calculation. Search Google for {crop_type} irrigation. Error: {str(e)}"
 @tool
 def get_irrigation_advice(soil_moisture: str, temperature: str, crop_type: str):
-        """
+    """
     Provides precise irrigation advice from 'irrigation_recommendation.csv'.
     
     Optimized for 350px UI cards. Supports 14 varieties (5 crops, 9 plants).
@@ -708,7 +708,9 @@ def get_irrigation_advice(soil_moisture: str, temperature: str, crop_type: str):
         temperature (int): Current temp in °C.
         crop_type (str): Specific name (e.g., 'Wheat', 'Euphorbia').
     """
-    csv_path = "irrigation_recommendation.csv"
+    
+    
+    
     #"""
     #Provides irrigation recommendations from 'irrigation_recommendation.csv'. 
     
@@ -718,7 +720,7 @@ def get_irrigation_advice(soil_moisture: str, temperature: str, crop_type: str):
         #crop_type: The name of the crop (e.g., 'Wheat', 'Maize', 'Rice', 'Euphorbia').
     #"""
     
-    
+    csv_path = "irrigation_recommendation.csv"
     if not os.path.exists(csv_path):
         return "The irrigation database is currently unavailable. Please provide general watering advice for this crop."
 
