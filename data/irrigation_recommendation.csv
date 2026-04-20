@@ -38,6 +38,11 @@ soil_moisture,temperature,plant_type,water_requirement,critical_stage,status,war
 1-30 (Dry),36-50 (Hot),Rabail/Jasmine,Very High,Budding,Heat Stress,Irrigate early morning only.,Critical heat stress. Irrigate early morning.
 1-30 (Dry),36-50 (Hot),Toot,Very High,Fruit Setting,Heat Stress,Irrigate early morning only.,Critical heat stress. Irrigate early morning.
 1-30 (Dry),36-50 (Hot),Java Plum,Very High,Fruit Setting,Heat Stress,Irrigate early morning only.,Critical heat stress. Irrigate early morning.
+1-30 (Dry),0-20 (Cool),Wheat,Moderate,Crown Root Initiation,Thirsty,Low moisture for tillering.,Apply first irrigation at CRI stage.
+1-30 (Dry),21-35 (Mild),Sugarcane,High,Formative Stage,Thirsty,Moisture stress during growth.,Immediate irrigation required for cane elongation.
+1-30 (Dry),21-35 (Mild),Rice,Very High,Transplanting/Panicle,Critical,Soil cracking risk.,Maintain 2-3 inches of standing water.
+1-30 (Dry),36-50 (Hot),Cotton,High,Flowering/Boll Formation,Heat Stress,Flower shedding risk.,Irrigate early morning to maintain turgidity.
+1-30 (Dry),21-35 (Mild),Maize,Moderate,Tasseling/Silking,Thirsty,Water stress reduces yield.,Ensure soil moisture during silking stage.
 31-70 (Optimal),0-20 (Cool),Kachnar,Moderate,Growth,Healthy,Maintain current schedule.,Standard irrigation for Kachnar.
 31-70 (Optimal),0-20 (Cool),Thuja,Moderate,Growth,Healthy,Maintain current schedule.,Standard irrigation for Thuja.
 31-70 (Optimal),0-20 (Cool),Rose,Moderate,Budding,Healthy,Maintain current schedule.,Standard irrigation for Rose.
@@ -77,6 +82,11 @@ soil_moisture,temperature,plant_type,water_requirement,critical_stage,status,war
 31-70 (Optimal),36-50 (Hot),Rabail/Jasmine,Moderate,Budding,Healthy,Maintain current schedule.,Standard irrigation for Rabail/Jasmine.
 31-70 (Optimal),36-50 (Hot),Toot,Moderate,Fruit Setting,Healthy,Maintain current schedule.,Standard irrigation for Toot.
 31-70 (Optimal),36-50 (Hot),Java Plum,Moderate,Fruit Setting,Healthy,Maintain current schedule.,Standard irrigation for Java Plum.
+31-70 (Optimal),0-20 (Cool),Wheat,Moderate,Booting/Heading,Healthy,Ideal conditions.,Maintain current moisture; monitor for rust.
+31-70 (Optimal),21-35 (Mild),Sugarcane,High,Grand Growth,Healthy,Optimal growth phase.,Continue regular irrigation cycles.
+31-70 (Optimal),21-35 (Mild),Rice,Very High,Tillering,Healthy,Good water level.,Keep water levels consistent; avoid drying.
+31-70 (Optimal),21-35 (Mild),Cotton,Moderate,Square Formation,Healthy,Stable growth.,Monitor for pests like whitefly/jassid.
+31-70 (Optimal),21-35 (Mild),Maize,Moderate,Grain Filling,Healthy,Optimal moisture.,No immediate action; check for stem borer.
 71-100 (Saturated),0-20 (Cool),Kachnar,None,Growth,Waterlogged,Risk of fungal infection.,Standard irrigation for Kachnar.
 71-100 (Saturated),0-20 (Cool),Thuja,None,Growth,Waterlogged,Risk of fungal infection.,Standard irrigation for Thuja.
 71-100 (Saturated),0-20 (Cool),Rose,None,Budding,Waterlogged,Risk of fungal infection.,Standard irrigation for Rose.
@@ -116,3 +126,8 @@ soil_moisture,temperature,plant_type,water_requirement,critical_stage,status,war
 71-100 (Saturated),36-50 (Hot),Rabail/Jasmine,None,Budding,Danger,High humidity & heat risk.,Standard irrigation for Rabail/Jasmine.
 71-100 (Saturated),36-50 (Hot),Toot,None,Fruit Setting,Danger,High humidity & heat risk.,Standard irrigation for Toot.
 71-100 (Saturated),36-50 (Hot),Java Plum,None,Fruit Setting,Danger,High humidity & heat risk.,Standard irrigation for Java Plum.
+71-100 (Saturated),0-20 (Cool),Wheat,None,Flowering,Waterlogged,Risk of root rot.,Ensure proper drainage; avoid standing water.
+71-100 (Saturated),21-35 (Mild),Sugarcane,None,Maturity,Saturated,Risk of lodging.,Stop irrigation; facilitate field drainage.
+71-100 (Saturated),21-35 (Mild),Rice,None,Ripening,Saturated,Excessive water.,Drain field 2 weeks before harvest.
+71-100 (Saturated),36-50 (Hot),Cotton,None,Boll Opening,Danger,High humidity risk.,High risk of boll rot; clear standing water.
+71-100 (Saturated),21-35 (Mild),Maize,None,Tasseling,Waterlogged,Nitrogen leaching risk.,Drain excess water immediately to prevent wilting.
