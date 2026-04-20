@@ -60,7 +60,7 @@ secondary_key = os.getenv("GAI_KEY_OWN_PROJECT")
 
 # 2. Initialize both models
 model_1 = ChatGoogleGenerativeAI(model="gemini-2.5-flash", google_api_key=primary_key)
-model_2 = ChatGoogleGenerativeAI(model="gemini-2.5-flash-lite", google_api_key=secondary_key)
+model_2 = ChatGoogleGenerativeAI(model="gemini-2.5-pro", google_api_key=secondary_key)
 
 # 3. Create the "Smart" model with fallback logic
 # This replaces your manual rotation function
