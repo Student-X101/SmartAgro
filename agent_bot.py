@@ -105,6 +105,33 @@ from langchain_core.messages import SystemMessage, HumanMessage
     #Fetches a full weather report (Temp, Humidity, Rain, Wind) 
     #using only the name of the city or region.
     #"""
+
+#===================================================================
+import requests
+from datetime import datetime
+
+def get_crop_calendar():
+    """Returns sowing and reaping info based on the current month."""
+    month = datetime.now().month
+    
+    # Define agricultural seasons for the region (e.g., D.I. Khan/Pakistan context)
+    calendar = {
+        1:  {"sow": "Late Wheat", "reap": "Sugarcane, Guava"},
+        2:  {"sow": "Spring Sugarcane, Sunflower", "reap": "Sugarcane, Mustard"},
+        3:  {"sow": "Spring Maize, Sugarcane", "reap": "Wheat (Early), Gram"},
+        4:  {"sow": "Cotton, Rice (Nurseries)", "reap": "Wheat (Peak), Mustard"},
+        5:  {"sow": "Cotton, Kharif Maize", "reap": "Wheat (Final), Berries"},
+        6:  {"sow": "Rice (Transplanting), Cotton", "reap": "Melons, Mangoes"},
+        7:  {"sow": "Rice, Maize", "reap": "Mangoes, Dates (Early)"},
+        8:  {"sow": "Late Rice, Vegetables", "reap": "Dates (Peak), Mangoes"},
+        9:  {"sow": "Autumn Maize, Mustard", "reap": "Dates (Final), Rice (Early)"},
+        10: {"sow": "Wheat (Early), Gram", "reap": "Rice, Cotton"},
+        11: {"sow": "Wheat (Peak), Oilseeds", "reap": "Rice, Cotton, Sugarcane"},
+        12: {"sow": "Wheat (Final)", "reap": "Sugarcane, Citrus"}
+    }
+    return calendar.get(month, {"sow": "N/A", "reap": "N/A"})
+#===================================================================
+
 @tool
 def get_weather_by_location(location: str):
     """
@@ -135,14 +162,26 @@ def get_weather_by_location(location: str):
         weather_url = f"https://api.open-meteo.com/v1/forecast?latitude={lat}&longitude={lon}&current=temperature_2m,relative_humidity_2m,rain,wind_speed_10m"
         weather_res = requests.get(weather_url).json()
         current = weather_res.get('current', {})
+        
+        # Step 3: Get Crop Context 
+        crops = get_crop_calendar()
 
         return (
-            f"🌤️ **Weather Report for {location}** ({lat}, {lon}):\n"
+            f"🌤️ **Weather Report for {location}**:\n"
             f"- Temperature: {current.get('temperature_2m')}°C\n"
             f"- Humidity: {current.get('relative_humidity_2m')}%\n"
             f"- Rain: {current.get('rain')} mm\n"
-            f"- Wind Speed: {current.get('wind_speed_10m')} km/h\n"
-            f"Source: Open-Meteo Real-time Data"
+            f"- Wind Speed: {current.get('wind_speed_10m')} km/h\n\n"
+            f"🌾 **Agricultural Context for {datetime.now().strftime('%B')}:**\n"
+            f"- **Crops to Sow:** {crops['sow']}\n"
+            f"- **Crops to Reap:** {crops['reap']}\n"
+            f"Source: Open-Meteo & Regional Crop Calendar"
+            #f"🌤️ **Weather Report for {location}** ({lat}, {lon}):\n"
+            #f"- Temperature: {current.get('temperature_2m')}°C\n"
+            #f"- Humidity: {current.get('relative_humidity_2m')}%\n"
+            #f"- Rain: {current.get('rain')} mm\n"
+            #f"- Wind Speed: {current.get('wind_speed_10m')} km/h\n"
+            #f"Source: Open-Meteo Real-time Data"
         )
     except Exception as e:
         return f"Error connecting to weather services: {str(e)}"
