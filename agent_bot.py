@@ -59,8 +59,8 @@ primary_key = os.getenv("GAI_KEY_DEFAULT_PROJECT")#    os.getenv("GAI_KEY_DEFAUL
 secondary_key = os.getenv("GAI_KEY_OWN_PROJECT")
 
 # 2. Initialize both models
-model_1 = ChatGoogleGenerativeAI(model="gemini-2.5-flash", google_api_key=primary_key)
-model_2 = ChatGoogleGenerativeAI(model="gemini-2.5-pro", google_api_key=secondary_key)
+model_1 = ChatGoogleGenerativeAI(model="gemini-2.5-flash-lite", google_api_key=primary_key)
+model_2 = ChatGoogleGenerativeAI(model="gemini-2.5-flash", google_api_key=secondary_key)
 
 # 3. Create the "Smart" model with fallback logic
 # This replaces your manual rotation function
@@ -135,14 +135,21 @@ def get_crop_calendar():
 @tool
 def get_weather_by_location(location: str):
     """
-    Fetches real-time weather. 
-    REQUIRED: You must ask the user for a specific city or location if it is not provided. 
-    DO NOT guess the location.Fetches a full weather report (Temp, Humidity, Rain, Wind) 
-    using only the name of the city or region.
+    Fetches a comprehensive real-time weather report and associated crop calendar.
+    
+    REQUIRED: A specific city or area name must be provided. The function will 
+    not attempt to guess the user's location.
+    
+    Returns a full report including Temperature, Humidity, Rain, and Wind speed. 
+    Additionally, integrates with `get_crop_calendar()` to provide a list of 
+    crops to sow or reap based on the current weather conditions.
     
     Args:
-        location: The city or area name required for weather lookups.
-     """
+        location (str): The name of the city or region for the weather lookup.
+    """
+    
+   
+    
    
     location = location.strip()
     print(f"DEBUG: Weather tool searching for: {location}")
@@ -198,12 +205,15 @@ from langchain.tools import tool
 @tool
 def boost_crop_production(soil_fertility: str, irrigation_efficiency: str, plant_type: str ):
     """
-    Provides NPK fertilizer and system repair advice from 'production_master.csv'.
+    Retrieves NPK, pH, and growth hacks from 'production_boost.csv'.
     
     Args:
-        soil_fertility: The current nutrient status ('Low', 'Medium', 'High').
-        irrigation_efficiency: The system efficiency ('0-50% (Low)' or '51-100% (High)').
-        plant_type: The specific plant name (e.g., 'Kachnar', 'Thuja', 'Java Plum').
+        plant_type (str): Name of the crop/plant (5 crops, 9 plants available).
+        soil_fertility (str): 'Low', 'Medium', or 'High'.
+        irrigation_efficiency (str): '0-50% (Low)' or '51-100% (High)'.
+    
+    Returns:
+        str: Concise, bulleted advice for the specific plant and soil status.
     """
     csv_path = "production_boost.csv"
     
@@ -677,14 +687,26 @@ from langchain.tools import tool
      #   return f"Error in irrigation calculation. Search Google for {crop_type} irrigation. Error: {str(e)}"
 @tool
 def get_irrigation_advice(soil_moisture: str, temperature: str, crop_type: str):
-    """
-    Provides irrigation recommendations from 'irrigation_recommendation.csv'. 
+        """
+    Provides precise irrigation advice from 'irrigation_recommendation.csv'.
+    
+    Optimized for 350px UI cards. Supports 14 varieties (5 crops, 9 plants).
+    Output must be concise: 'Short answer, full data'—meaning all metrics are 
+    included but with minimal text.
     
     Args:
-        soil_moisture: The current moisture percentage (0-100).
-        temperature: The current temperature in Celsius.
-        crop_type: The name of the crop (e.g., 'Wheat', 'Maize', 'Rice', 'Euphorbia').
+        soil_moisture (int): Current moisture % (0-100).
+        temperature (int): Current temp in °C.
+        crop_type (str): Specific name (e.g., 'Wheat', 'Euphorbia').
     """
+    #"""
+    #Provides irrigation recommendations from 'irrigation_recommendation.csv'. 
+    
+    #Args:
+        #soil_moisture: The current moisture percentage (0-100).
+        #temperature: The current temperature in Celsius.
+        #crop_type: The name of the crop (e.g., 'Wheat', 'Maize', 'Rice', 'Euphorbia').
+    #"""
     csv_path = "irrigation_recommendation.csv"
     
     if not os.path.exists(csv_path):
