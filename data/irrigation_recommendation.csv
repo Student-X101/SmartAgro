@@ -1,4 +1,4 @@
-soil_moisture,temperature,plant_type,water_requirement,critical_stage,status,warning,recommendation
+soil_moisture,temperature,crop_type,water_requirement,critical_stage,status,warning,recommendation
 1-30 (Dry),0-20 (Cool),Kachnar,Moderate,Growth,Thirsty,Water during daylight hours.,Standard irrigation for Kachnar.
 1-30 (Dry),0-20 (Cool),Thuja,Moderate,Growth,Thirsty,Water during daylight hours.,Standard irrigation for Thuja.
 1-30 (Dry),0-20 (Cool),Rose,Moderate,Budding,Thirsty,Water during daylight hours.,Standard irrigation for Rose.
