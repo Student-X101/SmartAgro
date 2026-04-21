@@ -236,21 +236,43 @@ def boost_crop_production(soil_fertility: str, irrigation_efficiency: str, plant
 
         df = pd.read_csv(csv_path)
         plant_type_clean = plant_type.strip().capitalize()
-        
-        # 1. Map Numeric to CSV Categories
-        if fertility_val <= 30: status = "Poor"
-        elif fertility_val <= 70: status = "Average"
-        else: status = "Rich"
 
-        # 2. Search the CSV
-        res = df[df['plant_type'].str.capitalize() == plant_type_clean]
+        # 1. Map the numeric fertility (0-100) to match your CSV's "Low/Medium/High"
+        if fertility_val <= 30: status = "Low"
+        elif fertility_val <= 70: status = "Medium"
+        else: status = "High"
+        
+        # 2. Map the numeric efficiency to match your CSV's format
+        # (Assuming the input is a percentage)
+        eff_val = int(''.join(filter(str.isdigit, str(irrigation_efficiency))))
+        eff_cat = "0-50% (Low)" if eff_val <= 50 else "51-100% (High)"
+        
+        # 3. Search using the CORRECT column names from your CSV
+        res = df[
+            (df['plant_type'].str.strip().str.lower() == plant_type_clean.lower()) &
+            (df['soil_fertility'].str.strip().str.lower() == status.lower()) &
+            (df['irrigation_efficiency'].str.contains(eff_cat.split('%')[0])) # Matches the '0-50' or '51-100' part
+        ]
         
         if res.empty:
-            return f"I don't have local data for '{plant_type}' yet. I recommend using the search tool to find professional fertilizer strategies for it."
+            return f"No specific boost strategy found for {plant_type_clean} with {status} fertility."
+        
+        final_row = res.iloc[0]
+            
+        # 1. Map Numeric to CSV Categories
+        #if fertility_val <= 30: status = "Poor"
+        #elif fertility_val <= 70: status = "Average"
+        #else: status = "Rich"
+
+        # 2. Search the CSV
+        #res = df[df['plant_type'].str.capitalize() == plant_type_clean]
+        
+        #if res.empty:
+         #   return f"I don't have local data for '{plant_type}' yet. I recommend using the search tool to find professional fertilizer strategies for it."
 
         # Filter by status
-        advice = res[res['fertility_level'].str.capitalize() == status]
-        final_row = advice.iloc[0] if not advice.empty else res.iloc[0]
+        #advice = res[res['fertility_level'].str.capitalize() == status]
+        #final_row = advice.iloc[0] if not advice.empty else res.iloc[0]
 
         return (
             f"🚀 **Boost Strategy for {plant_type_clean}**: {final_row['boost_strategy']}\n"
@@ -791,8 +813,12 @@ def get_irrigation_advice(soil_moisture: str, temperature: str, crop_type: str):
 
         #final_row = res.iloc[0]
         #status = "CRITICAL" if m_val < 30 else "Healthy"
+        # 1. Standardize input to lowercase for comparison
+        crop_search = crop_type.strip().lower()
+
+        # 2. Search using lowercase comparison for plant_type
         res = df[
-            (df['plant_type'].str.strip().str.capitalize() == crop_clean) & 
+            (df['plant_type'].str.strip().str.lower() == crop_search) & 
             (df['soil_moisture'].str.strip() == m_cat) & 
             (df['temperature'].str.strip() == t_cat)
         ]
