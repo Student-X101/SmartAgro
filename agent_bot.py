@@ -1312,7 +1312,8 @@ async def irrigation_page(data: IrrigationRequest, db: Session = Depends(get_db)
         f"crop_type='{data.crop_type}', soil_moisture='{data.soil_moisture}', "
         f"and temperature='{data.temperature}'.\n"
         #f"Target: Retrieve irrigation schedules and warnings from 'irrigation_recommendation.csv'.\n"
-        f"Output: Provide a concise summary of the advice returned by the tool."
+        f"Output: Return the tool's data and for each point add 1-2 sentences of practical context "
+        f"explaining why it matters for {data.crop_type} in these conditions. Do not add unrelated advice."
     )
     #prompt = (
     #f"Use the 'get_irrigation_advice' tool for crop_type='{data.crop_type}', "
@@ -1408,7 +1409,8 @@ async def crop_production_page(data: CropProductionRequest, db: Session = Depend
         f"plant_type='{data.plant_type}', soil_fertility='{data.soil_fertility}', "
         f"and irrigation_efficiency='{data.irrigation_efficiency}'.\n"
         f"Target: Extract 'boost_strategy', 'growth_hack', and 'ideal_ph' from the database.\n"
-        f"Output: Summarize ONLY the data returned by the tool for {data.plant_type}."
+        f"Output: Return the tool's data and for each point add 1-2 sentences of practical context "
+        f"explaining why it matters for {data.plant_type} under these soil and irrigation conditions. Do not add unrelated advice."
     )
     
     # 2. Invoke Agent
