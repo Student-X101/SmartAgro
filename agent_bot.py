@@ -1307,34 +1307,14 @@ async def ask_voice(file: UploadFile = File(...), db: Session = Depends(get_db))
 
 @app.post("/feature/irrigation")
 async def irrigation_page(data: IrrigationRequest, db: Session = Depends(get_db)):#, db: Session = Depends(get_db)
-    # 1. Force the Agent to use the new tool
-    #prompt = (
-    #    f"Use the 'get_irrigation_advice' tool for crop_type='{data.crop_type}', "
-    #    f"temperature={data.temperature}, and soil_moisture={data.soil_moisture}.\n"
-    #    f"Based on the tool's report, give the farmer a clear 'Yes/No' on whether to water now "
-    #    f"and explain why based on the growth stage."
-    #)
-   prompt = (
+    prompt = (
     f"Use the 'get_irrigation_advice' tool for crop_type='{data.plant_type}', "
     f"soil_moisture='{data.soil_moisture}', and temperature='{data.temperature}'.\n"
     f"Your task: Extract data from 'irrigation_recommendation.csv' regarding "
     f"water_requirement, critical_stage, and warnings.\n"
     f"Provide a concise summary of the irrigation advice found in the database."
     )
-    #f"Act as a professional agronomist. Use the 'get_irrigation_advice' tool to retrieve "
-    #f"specific data for crop: '{data.crop_type}', temperature: {data.temperature}°C, "
-   # f"and soil moisture: {data.soil_moisture}%.\n"
-    #f" Use irrigation_recommendation.csv to recommend watering requirements, critical stage/critical growth stage, status and warning etc"
-    
-     #f" if you are unable to get information , check again and ask politely and donot mention tool names "    
-    #f"Your task: Provide a comprehensive irrigation schedule and management strategy. "
-    #f"You can also use irrigation_recommendation.csv to recommend.Detail the exact watering depth, recommended "
-    #f"time of day for irrigation, and any specific techniques (like drip or flooding) "
-    #f"based on the current moisture levels and heat stress(if present in irrigation_recommendation.csv)."
-    #f"If the desired/asked details are not mentioned in irrigation_recommendation.csv, then use search_tool to search on Google about the asked/needed information."
-       
-    
-
+     
     # 2. Invoke the Agent
     response_state = await agri_ai.ainvoke({"messages": [HumanMessage(content=prompt)]})
     raw_content = response_state['messages'][-1].content
@@ -1354,15 +1334,9 @@ async def irrigation_page(data: IrrigationRequest, db: Session = Depends(get_db)
     )
    #5. save to remote db
     try:
-        #universal_save(
-        #feature="Irrigation",
-        #ai_recommendation=final_answer,
-        #crop_or_plant=data.crop_type,
-        #soil_moisture=data.soil_moisture,
-        #temperature=data.temperature
-    #)
         save_to_remote_db("/feature/irrigation-analysis",{"user_msg":f"Irrigation: {data.crop_type} at {data.soil_moisture}% moisture", 
         "ai_msg":final_answer})
+        
     except Exception as e:
         print(f"Remote DB failed: {e}")
     
