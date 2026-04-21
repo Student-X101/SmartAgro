@@ -1364,48 +1364,7 @@ async def irrigation_page(data: IrrigationRequest, db: Session = Depends(get_db)
     
     return {"status": "success", "recommendation": final_answer}
 
-#@app.post("/feature/soil-analysis")
-#async def soil_analysis_page(data: SoilAnalysisRequest, db: Session = Depends(get_db)):
-    # 1. Construct a rich prompt from the dropdowns
-   # Updated Prompt Construction for Observable Inputs
-#    prompt = (
-#        "Acting as a local agricultural expert for Pakistan, provide a crop and fertilizer "
-#        "recommendation based ONLY on the following observable data: "
- #   )
 
-    # Core Inputs
-  #  if data.soil_type: 
-   #     prompt += f"\n- Soil Type: {data.soil_type}. "
-
- #   if data.temperature: 
-  #      prompt += f"\n- Current Temperature: {data.temperature}°C. "
-
-   # if data.plant_type: 
-    #    prompt += f"\n- Preferred Crop Category: {data.plant_type}. "
-
-    #if data.soil_moisture: 
-     #   prompt += f"\n- Soil Moisture Level: {data.soil_moisture}. "
-
-# Contextual Description (If the farmer adds notes like 'leaves are yellow' or 'very dry')
-    #if data.descript9ion: 
-     #   prompt += f"\n- Farmer's Observation: {data.description}. "
-    
-    # Logic for missing lab data
-    #prompt += (
-     #   "\n\nSince laboratory soil data (pH and NPK) is currently unavailable, "
-      #  "suggest crops that thrive in this soil type and climate. "
-       # "Also, recommend a general-purpose fertilizer or organic soil amendment "
-        #"typically used for these conditions in this region. Provide a concise response."
-    #)
-
-    # 2. Send it to the AI Agent (the 'brain')
-    #response_state = await agri_ai.ainvoke({"messages": [HumanMessage(content=prompt)]})
-    #final_answer = response_state['messages'][-1].content
-
-    # 3. Save to History
-    #save_to_db(user_msg="Soil Analysis Request", ai_msg=final_answer, tool="Soil Analysis AI", db=db)
-
-    #return {"status": "success", "recommendation": final_answer}
 
 @app.post("/feature/soil-analysis")
 async def soil_analysis_page(data: SoilAnalysisRequest, db: Session = Depends(get_db)):#, db: Session = Depends(get_db)
@@ -1441,40 +1400,6 @@ async def soil_analysis_page(data: SoilAnalysisRequest, db: Session = Depends(ge
     return {"status": "success", "recommendation": str(final_answer)}
 
     
-#@app.post("/feature/crop-production")
-#async def crop_production_page(data: CropProductionRequest, db: Session = Depends(get_db)):
-    # Construct prompt
-    # Updated Prompt Construction
-# This ignores location/month and focuses strictly on Soil, Temp, and Type
-
-#    prompt = (
-#        "Acting as an expert agronomist, recommend the best crops based strictly on the following conditions: "
-##    )
-    
-    # Adding the specific constraints
- #   if data.soil_fertility: 
- #       prompt += f"The soil fertility level is {data.soil_fertility}. "
-    
- #   if data.temperature: 
- #       prompt += f"The current/expected temperature is {data.temperature}°C. "
- #   
- ##   if data.plant_type: 
-  #      prompt += f"The specific plant category or type requested is {data.plant_type}. "
-    
-    # Final instruction
-#    prompt += (
- #       "\n\nBased ONLY on these three factors, provide a concise list of suitable crops "
-#        "with a one-sentence justification for each based on how they fit these conditions."
-#    )
-
-    # Send to Agent
-##    response_state = await agri_ai.ainvoke({"messages": [HumanMessage(content=prompt)]})
-##    final_answer = response_state['messages'][-1].content
-
-    # Save to DB
-#    save_to_db(user_msg=f"Crop Production Request for {data.location}", ai_msg=final_answer, tool="Crop Production AI", db=db)
-
- #   return {"status": "success", "recommendation": final_answer}
 
 @app.post("/feature/crop-production")
 async def crop_production_page(data: CropProductionRequest, db: Session = Depends(get_db)):
@@ -1493,15 +1418,14 @@ async def crop_production_page(data: CropProductionRequest, db: Session = Depend
     # Cleaning for SQLite
     #final_answer = " ".join([item.get("text", "") for item in raw_content if isinstance(item, dict)]) if isinstance(raw_content, list) else str(raw_content)
     if isinstance(raw_content, list):
-    # Handle both plain text blocks and Gemini's content block format
-    parts = []
-    for item in raw_content:
-        if isinstance(item, dict):
-            text = item.get("text") or item.get("content") or str(item)
-            parts.append(text)
-        elif isinstance(item, str):
-            parts.append(item)
-    final_answer = " ".join(parts).strip()
+        parts = []
+        for item in raw_content:
+            if isinstance(item, dict):
+                text = item.get("text") or item.get("content") or str(item)
+                parts.append(text)
+            elif isinstance(item, str):
+                parts.append(item)
+        final_answer = " ".join(parts).strip()
     else:
         final_answer = str(raw_content).strip()
 
