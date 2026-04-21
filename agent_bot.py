@@ -214,7 +214,7 @@ def boost_crop_production(soil_fertility: str, irrigation_efficiency: str, plant
     
     Args:
         plant_type (str): Name of the crop/plant (5 crops, 9 plants available).
-        soil_fertility (str): 'Low', 'Medium', or 'High'.
+        soil_fertility (str): A numeric value between 0-100 (where 0-30 is 'Low', 31-70 is 'Medium', and 71-100 is 'High').
         irrigation_efficiency (str): '0-50% (Low)' or '51-100% (High)'.
     
     Returns:
@@ -227,32 +227,68 @@ def boost_crop_production(soil_fertility: str, irrigation_efficiency: str, plant
         return "The local production database is missing. Please search the web for crop boost strategies."
 
     try:
+        # --- DATA CLEANING ---
+        # Convert strings to integers for logic, handling potential non-numeric strings
+        try:
+            fertility_val = int(''.join(filter(str.isdigit, str(soil_fertility))))
+        except ValueError:
+            return "To give you the best advice, could you tell me your soil fertility level (0-100) or if it's Low/High?"
+
         df = pd.read_csv(csv_path)
         plant_type_clean = plant_type.strip().capitalize()
         
+        # 1. Map Numeric to CSV Categories
+        if fertility_val <= 30: status = "Poor"
+        elif fertility_val <= 70: status = "Average"
+        else: status = "Rich"
+
         # 2. Search the CSV
         res = df[df['plant_type'].str.capitalize() == plant_type_clean]
         
-        # --- THE SEARCH FALLBACK LOGIC ---
         if res.empty:
-            return f"I couldn't find '{plant_type}' in my local agricultural records. Please use your search tool to find professional growth hacks and fertilizer strategies for this specific crop."
+            return f"I don't have local data for '{plant_type}' yet. I recommend using the search tool to find professional fertilizer strategies for it."
 
-        # 3. Process Fertility (1-100 to Category)
-        if soil_fertility <= 30: status = "Poor"
-        elif soil_fertility <= 70: status = "Average"
-        else: status = "Rich"
-
+        # Filter by status
         advice = res[res['fertility_level'].str.capitalize() == status]
         final_row = advice.iloc[0] if not advice.empty else res.iloc[0]
 
         return (
-            f"🚀 **Boost Strategy for {plant_type}**: {final_row['boost_strategy']}\n"
+            f"🚀 **Boost Strategy for {plant_type_clean}**: {final_row['boost_strategy']}\n"
             f"💡 **Growth Hack**: {final_row['growth_hack']}\n"
             f"🧪 **Target Soil pH**: {final_row['ideal_ph']}"
         )
 
     except Exception as e:
-        return f"Database error. Please search Google for {plant_type} cultivation tips. Error: {str(e)}"
+        # SILENT ERROR: Don't show the user the traceback or tool names
+        return "I encountered a small hiccup gathering that data. Could you please double-check the plant name and try again?"
+
+    #try:
+       # df = pd.read_csv(csv_path)
+       # plant_type_clean = plant_type.strip().capitalize()
+        
+        # 2. Search the CSV
+        #res = df[df['plant_type'].str.capitalize() == plant_type_clean]
+        
+        # --- THE SEARCH FALLBACK LOGIC ---
+        #if res.empty:
+            #return f"I couldn't find '{plant_type}' in my local agricultural records. Please use your search tool to find professional growth hacks and fertilizer strategies for this specific crop."
+
+        # 3. Process Fertility (1-100 to Category)
+        #if soil_fertility <= 30: status = "Poor"
+        #elif soil_fertility <= 70: status = "Average"
+        #else: status = "Rich"
+
+        #advice = res[res['fertility_level'].str.capitalize() == status]
+        #final_row = advice.iloc[0] if not advice.empty else res.iloc[0]
+
+        #return (
+         #   f"🚀 **Boost Strategy for {plant_type}**: {final_row['boost_strategy']}\n"
+          #  f"💡 **Growth Hack**: {final_row['growth_hack']}\n"
+           # f"🧪 **Target Soil pH**: {final_row['ideal_ph']}"
+        #)
+
+    #except Exception as e:
+     #   return f"Database error. Please search Google for {plant_type} cultivation tips. Error: {str(e)}"
 
 
 
