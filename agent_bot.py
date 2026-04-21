@@ -208,21 +208,21 @@ from langchain.tools import tool
 #    Provides strategies to boost yield based on soil fertility (1-100), 
 #    irrigation efficiency (%), and plant type.
 #    """
+
 @tool
-def boost_crop_production(soil_fertility: str, irrigation_efficiency: str, plant_type: str ):
+def boost_crop_production(soil_fertility: str, irrigation_efficiency: str, plant_type: str):
     """
-    Retrieves  boost_strategy,  growth_hack,	ideal_ph and recommendation from 'production_boost.csv'.
-    Optimized for 350px UI cards. Supports 14 varieties (5 crops, 9 plants).
-    Output must be concise: 'Short answer, full data'—meaning all metrics are 
-    included but with minimal text.
-    
+    Looks up crop production advice from local database.
+    Supports 14 varieties (5 crops, 9 plants).
+    Output must be concise and optimized for 350px UI cards.
+
     Args:
-        plant_type (str): Name of the crop/plant (5 crops, 9 plants available).
-        soil_fertility (str): A numeric value between 0-100 (where 0-30 is 'Low', 31-70 is 'Medium', and 71-100 is 'High').
-        irrigation_efficiency (str): '0-50% (Low)' or '51-100% (High)'.
+        plant_type (str): Name of the crop/plant.
+        soil_fertility (str): Numeric value 0-100 (0-30=Low, 31-70=Medium, 71-100=High).
+        irrigation_efficiency (str): Numeric value 0-100 (0-50=Low, 51-100=High).
     
     Returns:
-        str: Concise, bulleted advice for the specific plant and soil status.
+        str: Concise bulleted boost advice for the given plant and conditions.
     """
     #csv_path = "production_boost.csv"
     csv_path = os.path.join(BASE_DIR, "data", "production_boost.csv")
@@ -264,21 +264,7 @@ def boost_crop_production(soil_fertility: str, irrigation_efficiency: str, plant
         
         final_row = res.iloc[0]
             
-        # 1. Map Numeric to CSV Categories
-        #if fertility_val <= 30: status = "Poor"
-        #elif fertility_val <= 70: status = "Average"
-        #else: status = "Rich"
-
-        # 2. Search the CSV
-        #res = df[df['plant_type'].str.capitalize() == plant_type_clean]
-        
-        #if res.empty:
-         #   return f"I don't have local data for '{plant_type}' yet. I recommend using the search tool to find professional fertilizer strategies for it."
-
-        # Filter by status
-        #advice = res[res['fertility_level'].str.capitalize() == status]
-        #final_row = advice.iloc[0] if not advice.empty else res.iloc[0]
-
+    
         return (
             f"🚀 **Boost Strategy for {plant_type_clean}**: {final_row['boost_strategy']}\n"
             f"💡 **Growth Hack**: {final_row['growth_hack']}\n"
@@ -783,22 +769,13 @@ def get_irrigation_advice(soil_moisture: str, temperature: str, crop_type: str):
     included but with minimal text.
     
     Args:
-        soil_moisture (int): Current moisture % (0-100).
-        temperature (int): Current temp in °C.
-        crop_type (str): Specific name (e.g., 'Wheat', 'Euphorbia').
+        soil_moisture (str): Current moisture percentage 0-100, e.g. '40'.
+        temperature (str): Current temperature in Celsius, e.g. '32'.
+        crop_type (str): Name of the crop or plant, e.g. 'Wheat', 'Rice', 'Euphorbia'.
+    
+    Returns:
+        str: Concise irrigation advice including water requirement, status, and warnings.
     """
-    
-    
-    
-    #"""
-    #Provides irrigation recommendations from 'irrigation_recommendation.csv'. 
-    
-    #Args:
-        #soil_moisture: The current moisture percentage (0-100).
-        #temperature: The current temperature in Celsius.
-        #crop_type: The name of the crop (e.g., 'Wheat', 'Maize', 'Rice', 'Euphorbia').
-    #"""
-    
     
     #csv_path = "irrigation_recommendation.csv"
     csv_path = os.path.join(BASE_DIR, "data", "irrigation_recommendation.csv")
@@ -1349,10 +1326,26 @@ async def irrigation_page(data: IrrigationRequest, db: Session = Depends(get_db)
     raw_content = response_state['messages'][-1].content
 
     # 3. FIX: SQLite string conversion
+    #if isinstance(raw_content, list):
+     #   final_answer = " ".join([item.get("text", "") for item in raw_content if isinstance(item, dict)])
+    #else:
+     #   final_answer = str(raw_content)
+
+        # Replace your current cleaning block with this
     if isinstance(raw_content, list):
-        final_answer = " ".join([item.get("text", "") for item in raw_content if isinstance(item, dict)])
+        parts = []
+        for item in raw_content:
+            if isinstance(item, dict):
+                text = item.get("text") or item.get("content") or str(item)
+                parts.append(text)
+            elif isinstance(item, str):
+                parts.append(item)
+        final_answer = " ".join(parts).strip()
     else:
-        final_answer = str(raw_content)
+        final_answer = str(raw_content).strip()
+    
+    if not final_answer:
+        final_answer = "Unable to retrieve irrigation data. Please try again."
 
     # 4. Save to DB
     save_to_db(
@@ -1493,31 +1486,31 @@ async def crop_production_page(data: CropProductionRequest, db: Session = Depend
         f"Output: Summarize ONLY the data returned by the tool for {data.plant_type}."
     )
     
-    #prompt = (
-        #f"Use the 'boost_crop_production' tool for plant_type='{data.plant_type}', "
-        #f"soil_fertility='{data.soil_fertility}', and irrigation_efficiency='{data.irrigation_efficiency}'.\n"
-        #f"Provide the exact boost strategy and growth hacks found in the database."
-
-        #f"such as boost_strategy, growth_hack, and ideal_ph.\n"
-        #f"Summarize the production boost advice found in the database for {data.plant_type}."
-    #)
-
     # 2. Invoke Agent
     response_state = await agri_ai.ainvoke({"messages": [HumanMessage(content=prompt)]})
     raw_content = response_state['messages'][-1].content
 
     # Cleaning for SQLite
-    final_answer = " ".join([item.get("text", "") for item in raw_content if isinstance(item, dict)]) if isinstance(raw_content, list) else str(raw_content)
+    #final_answer = " ".join([item.get("text", "") for item in raw_content if isinstance(item, dict)]) if isinstance(raw_content, list) else str(raw_content)
+    if isinstance(raw_content, list):
+    # Handle both plain text blocks and Gemini's content block format
+    parts = []
+    for item in raw_content:
+        if isinstance(item, dict):
+            text = item.get("text") or item.get("content") or str(item)
+            parts.append(text)
+        elif isinstance(item, str):
+            parts.append(item)
+    final_answer = " ".join(parts).strip()
+    else:
+        final_answer = str(raw_content).strip()
 
+    # Safety net — if still empty, something is wrong upstream
+    if not final_answer:
+        final_answer = "Unable to retrieve data. Please try again."
     save_to_db(user_msg=f"Boost: {data.plant_type} , Fertility:{data.soil_fertility} and Irrigation Efficiency:{data.irrigation_efficiency}", ai_msg=final_answer, tool="Production Boost Tool", db=db)
     try:
-        #universal_save(
-        #feature="Production Boost",
-        #ai_recommendation=final_answer,
-        #crop_or_plant=data.plant_type,
-        ##fertility=data.soil_fertility,
-        #irrigation_efficiency=data.irrigation_efficiency
-    #)
+        
         save_to_remote_db("/feature/production-analysis",{"user_msg":f"Boost: {data.plant_type}","ai_msg":final_answer})
     except Exception as e:
         print(f"Remote DB failed: {e}")
