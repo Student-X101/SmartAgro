@@ -211,7 +211,7 @@ from langchain.tools import tool
 @tool
 def boost_crop_production(soil_fertility: str, irrigation_efficiency: str, plant_type: str ):
     """
-    Retrieves NPK, boost_strategy, pH, and growth hacks from 'production_boost.csv'.
+    Retrieves  boost_strategy,  growth_hack,	ideal_ph and recommendation from 'production_boost.csv'.
     Optimized for 350px UI cards. Supports 14 varieties (5 crops, 9 plants).
     Output must be concise: 'Short answer, full data'—meaning all metrics are 
     included but with minimal text.
@@ -855,7 +855,7 @@ def get_irrigation_advice(soil_moisture: str, temperature: str, crop_type: str):
         
         return (
             f"💧 **Irrigation Report for {crop_clean}**:\n"
-            f"- **Current Conditions**: {t_cat} temperature and {m_cat} moisture.\n"
+            #f"- **Current Conditions**: {t_cat} temperature and {m_cat} moisture.\n"
             f"- **Water Requirement**: {final_row['water_requirement']}\n"
             f"- **Critical Growth Stage**: {final_row['critical_stage']}\n"
             f"- **Status**: {status}\n"
@@ -1334,7 +1334,7 @@ async def irrigation_page(data: IrrigationRequest, db: Session = Depends(get_db)
         f"INSTRUCTION: Call the 'get_irrigation_advice' tool using these parameters: "
         f"crop_type='{data.crop_type}', soil_moisture='{data.soil_moisture}', "
         f"and temperature='{data.temperature}'.\n"
-        f"Target: Retrieve irrigation schedules and warnings from 'irrigation_recommendation.csv'.\n"
+        #f"Target: Retrieve irrigation schedules and warnings from 'irrigation_recommendation.csv'.\n"
         f"Output: Provide a concise summary of the advice returned by the tool."
     )
     #prompt = (
