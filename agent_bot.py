@@ -818,7 +818,7 @@ def get_irrigation_advice(soil_moisture: str, temperature: str, crop_type: str):
 
         # 2. Search using lowercase comparison for plant_type
         res = df[
-            (df['plant_type'].str.strip().str.lower() == crop_search) & 
+            (df['crop_type'].str.strip().str.lower() == crop_search) & 
             (df['soil_moisture'].str.strip() == m_cat) & 
             (df['temperature'].str.strip() == t_cat)
         ]
@@ -1052,7 +1052,7 @@ class IrrigationRequest(BaseModel):
     
     soil_moisture: Optional[str] = None
     temperature: Optional[str] = None
-    crop_type: str
+    crop_type: Optional[str] = None
     #location_name: Optional[str] = "Dera Ismail Khan"
 #===========================================================================================================================
 # --- REMOTE ENDPOINTS FOR TEAMMATES ---
@@ -1308,12 +1308,18 @@ async def ask_voice(file: UploadFile = File(...), db: Session = Depends(get_db))
 @app.post("/feature/irrigation")
 async def irrigation_page(data: IrrigationRequest, db: Session = Depends(get_db)):#, db: Session = Depends(get_db)
     prompt = (
-    f"Use the 'get_irrigation_advice' tool for crop_type='{data.plant_type}', "
-    f"soil_moisture='{data.soil_moisture}', and temperature='{data.temperature}'.\n"
-    f"Your task: Extract data from 'irrigation_recommendation.csv' regarding "
-    f"water_requirement, critical_stage, and warnings.\n"
-    f"Provide a concise summary of the irrigation advice found in the database."
+        f"INSTRUCTION: Call the 'get_irrigation_advice' tool using these parameters: "
+        f"crop_type='{data.crop_type}', soil_moisture='{data.soil_moisture}', "
+        f"and temperature='{data.temperature}'.\n"
+        f"Target: Retrieve irrigation schedules and warnings from 'irrigation_recommendation.csv'.\n"
+        f"Output: Provide a concise summary of the advice returned by the tool."
     )
+    #prompt = (
+    #f"Use the 'get_irrigation_advice' tool for crop_type='{data.crop_type}', "
+    #f"soil_moisture='{data.soil_moisture}', and temperature='{data.temperature}'.\n"
+    #f"Your task: Extract data from 'irrigation_recommendation.csv' . "
+    #f"Provide a concise summary of the irrigation advice found in the database."
+    #)
      
     # 2. Invoke the Agent
     response_state = await agri_ai.ainvoke({"messages": [HumanMessage(content=prompt)]})
@@ -1456,30 +1462,22 @@ async def soil_analysis_page(data: SoilAnalysisRequest, db: Session = Depends(ge
 
 @app.post("/feature/crop-production")
 async def crop_production_page(data: CropProductionRequest, db: Session = Depends(get_db)):
-    # 1. Direct Tool-Based Prompt
-    #prompt = (
-    #    f"Use the 'boost_crop_production' tool for plant_type='{data.plant_type}', "
-    #    f"fertility={data.soil_fertility}, and efficiency={data.irrigation_efficiency}.\n"
-    #    f"Summarize the boost strategy and growth hacks provided by the tool."
-    #)
-    #prompt = (
-       
-    
-        #"Use the 'boost_crop_production' tool for plant_type='{data.plant_type}', "
-       # "fertility={data.soil_fertility}, and efficiency={data.irrigation_efficiency}.\n"
-      #  "Your task: Use production_boost.csv for information like boost_strategy, growth_hack and soil_ph etc  "
-        #f"You can also use production_boost.csv for your help."
-        #f"If desired/asked/needed information is not available in production_boost.csv, use search_tool to search on Google for the needed information."
-     #   f"Summarize the boost strategy and growth hacks provided by the tool."
-    #)
-    # IMPORTANT: Notice the 'f' at the very beginning of the string.
     prompt = (
-        f"Use the 'boost_crop_production' tool for plant_type='{data.plant_type}', "
-        f"soil_fertility='{data.soil_fertility}', and irrigation_efficiency='{data.irrigation_efficiency}'.\n"
-        f"Your task: Extract information specifically from 'production_boost.csv' "
-        f"such as boost_strategy, growth_hack, and ideal_ph.\n"
-        f"Summarize the production boost advice found in the database for {data.plant_type}."
+        f"INSTRUCTION: Call the 'boost_crop_production' tool using these parameters: "
+        f"plant_type='{data.plant_type}', soil_fertility='{data.soil_fertility}', "
+        f"and irrigation_efficiency='{data.irrigation_efficiency}'.\n"
+        f"Target: Extract 'boost_strategy', 'growth_hack', and 'ideal_ph' from the database.\n"
+        f"Output: Summarize ONLY the data returned by the tool for {data.plant_type}."
     )
+    
+    #prompt = (
+        #f"Use the 'boost_crop_production' tool for plant_type='{data.plant_type}', "
+        #f"soil_fertility='{data.soil_fertility}', and irrigation_efficiency='{data.irrigation_efficiency}'.\n"
+        #f"Provide the exact boost strategy and growth hacks found in the database."
+
+        #f"such as boost_strategy, growth_hack, and ideal_ph.\n"
+        #f"Summarize the production boost advice found in the database for {data.plant_type}."
+    #)
 
     # 2. Invoke Agent
     response_state = await agri_ai.ainvoke({"messages": [HumanMessage(content=prompt)]})
