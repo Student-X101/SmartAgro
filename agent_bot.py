@@ -623,17 +623,30 @@ def hybrid_remedy_expert(plant_name: str, disease_name: str):
     # SAFE CSV LOADING
     try:
         df = pd.read_csv(os.path.join(BASE_DIR, "data", "plants_info.csv"))
-        #df = pd.read_csv("data/plants_info.csv")
-        # ... (matching logic) ...
+        
+        # Make matching more flexible: check if the disease from the CSV is *contained within* the disease name from the LLM.
+        # This handles cases where the LLM passes "guava wilt" but the CSV just has "wilt".
+        match = df[(df['urdu_name'].str.lower() == p_name) &
+                   (df['disease_names'].str.lower().apply(lambda csv_disease: csv_disease in d_name))]
+        
+        if not match.empty:
+            return f"Local Expert Result: Use {match.iloc[0]['treatment_organic']}."
+
     except Exception as e:
         print(f"Data Warning: CSV not found or unreadable: {e}")
+        
+        #df = pd.read_csv(os.path.join(BASE_DIR, "data", "plants_info.csv"))
+        #df = pd.read_csv("data/plants_info.csv")
+        # ... (matching logic) ...
+    #except Exception as e:
+        #print(f"Data Warning: CSV not found or unreadable: {e}")
     # Make matching more flexible: check if the disease from the CSV is *contained within* the disease name from the LLM.
     # This handles cases where the LLM passes "guava wilt" but the CSV just has "wilt".
-    match = df[(df['urdu_name'].str.lower() == p_name) &
-               (df['disease_names'].str.lower().apply(lambda csv_disease: csv_disease in d_name))]
+    #match = df[(df['urdu_name'].str.lower() == p_name) &
+               #(df['disease_names'].str.lower().apply(lambda csv_disease: csv_disease in d_name))]
     
-    if not match.empty:
-        return f"Local Expert Result: Use {match.iloc[0]['treatment_organic']}."
+    #if not match.empty:
+       # return f"Local Expert Result: Use {match.iloc[0]['treatment_organic']}."
 
     # --- TIER 2: KAGGLE DATASET VERIFICATION ---
  # INSERT PATHS HERE
