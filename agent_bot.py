@@ -1314,19 +1314,26 @@ async def irrigation_page(data: IrrigationRequest, db: Session = Depends(get_db)
     #    f"Based on the tool's report, give the farmer a clear 'Yes/No' on whether to water now "
     #    f"and explain why based on the growth stage."
     #)
-    prompt = (
-    f"Act as a professional agronomist. Use the 'get_irrigation_advice' tool to retrieve "
-    f"specific data for crop: '{data.crop_type}', temperature: {data.temperature}°C, "
-    f"and soil moisture: {data.soil_moisture}%.\n"
-    f" Use irrigation_recommendation.csv to recommend watering requirements, critical stage/critical growth stage, status and warning etc"
-    f" if you are unable to get information , check again and ask politely and donot mention tool names "    
+   prompt = (
+    f"Use the 'get_irrigation_advice' tool for crop_type='{data.plant_type}', "
+    f"soil_moisture='{data.soil_moisture}', and temperature='{data.temperature}'.\n"
+    f"Your task: Extract data from 'irrigation_recommendation.csv' regarding "
+    f"water_requirement, critical_stage, and warnings.\n"
+    f"Provide a concise summary of the irrigation advice found in the database."
+    )
+    #f"Act as a professional agronomist. Use the 'get_irrigation_advice' tool to retrieve "
+    #f"specific data for crop: '{data.crop_type}', temperature: {data.temperature}°C, "
+   # f"and soil moisture: {data.soil_moisture}%.\n"
+    #f" Use irrigation_recommendation.csv to recommend watering requirements, critical stage/critical growth stage, status and warning etc"
+    
+     #f" if you are unable to get information , check again and ask politely and donot mention tool names "    
     #f"Your task: Provide a comprehensive irrigation schedule and management strategy. "
     #f"You can also use irrigation_recommendation.csv to recommend.Detail the exact watering depth, recommended "
     #f"time of day for irrigation, and any specific techniques (like drip or flooding) "
     #f"based on the current moisture levels and heat stress(if present in irrigation_recommendation.csv)."
     #f"If the desired/asked details are not mentioned in irrigation_recommendation.csv, then use search_tool to search on Google about the asked/needed information."
        
-    )
+    
 
     # 2. Invoke the Agent
     response_state = await agri_ai.ainvoke({"messages": [HumanMessage(content=prompt)]})
@@ -1481,15 +1488,23 @@ async def crop_production_page(data: CropProductionRequest, db: Session = Depend
     #    f"fertility={data.soil_fertility}, and efficiency={data.irrigation_efficiency}.\n"
     #    f"Summarize the boost strategy and growth hacks provided by the tool."
     #)
-    prompt = (
+    #prompt = (
        
     
-        "Use the 'boost_crop_production' tool for plant_type='{data.plant_type}', "
-        "fertility={data.soil_fertility}, and efficiency={data.irrigation_efficiency}.\n"
-        "Your task: Use production_boost.csv for information like boost_strategy, growth_hack and soil_ph etc  "
+        #"Use the 'boost_crop_production' tool for plant_type='{data.plant_type}', "
+       # "fertility={data.soil_fertility}, and efficiency={data.irrigation_efficiency}.\n"
+      #  "Your task: Use production_boost.csv for information like boost_strategy, growth_hack and soil_ph etc  "
         #f"You can also use production_boost.csv for your help."
         #f"If desired/asked/needed information is not available in production_boost.csv, use search_tool to search on Google for the needed information."
-        f"Summarize the boost strategy and growth hacks provided by the tool."
+     #   f"Summarize the boost strategy and growth hacks provided by the tool."
+    #)
+    # IMPORTANT: Notice the 'f' at the very beginning of the string.
+    prompt = (
+        f"Use the 'boost_crop_production' tool for plant_type='{data.plant_type}', "
+        f"soil_fertility='{data.soil_fertility}', and irrigation_efficiency='{data.irrigation_efficiency}'.\n"
+        f"Your task: Extract information specifically from 'production_boost.csv' "
+        f"such as boost_strategy, growth_hack, and ideal_ph.\n"
+        f"Summarize the production boost advice found in the database for {data.plant_type}."
     )
 
     # 2. Invoke Agent
