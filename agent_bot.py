@@ -41,6 +41,7 @@ app.add_middleware(
 )
 
 load_dotenv()
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 import os
 from langchain_google_genai import ChatGoogleGenerativeAI
@@ -64,7 +65,10 @@ model_2 = ChatGoogleGenerativeAI(model="gemini-2.5-flash", google_api_key=second
 
 # 3. Create the "Smart" model with fallback logic
 # This replaces your manual rotation function
-llm = model_1.with_fallbacks([model_2])
+llm = model_1.with_fallbacks(
+    [model_2], 
+    exceptions_to_handle=(Exception,) # This forces fallback on ANY error
+)
 
 # 1. This object contains the "Brain" (Model 1) and the "Backup" (Model 2)
 #llm = model_1.with_fallbacks([model_2])
@@ -220,7 +224,8 @@ def boost_crop_production(soil_fertility: str, irrigation_efficiency: str, plant
     Returns:
         str: Concise, bulleted advice for the specific plant and soil status.
     """
-    csv_path = "production_boost.csv"
+    #csv_path = "production_boost.csv"
+    csv_path = os.path.join(BASE_DIR, "data", "production_boost.csv")
     
     # 1. Check if file exists
     if not os.path.exists(csv_path):
@@ -494,7 +499,8 @@ def detect_soil_condition(moisture_level: str, soil_type: str):
         soil_type: The type of soil ('Clay', 'Sandy', 'Loamy').
     """
 
-    csv_path = "soil_detection.csv"
+    #csv_path = "soil_detection.csv"
+    csv_path = os.path.join(BASE_DIR, "data", "soil_detection.csv")
     
     if not os.path.exists(csv_path):
         return "Soil records are offline. Please provide general management tips for this soil type."
@@ -541,7 +547,8 @@ def get_commodity_prices(commodity: str, location: str):
     
     # 1. Try Local Data
     try:
-        df = pd.read_csv("data/commodity_prices.csv")
+        #df = pd.read_csv("data/commodity_prices.csv")
+        df = pd.read_csv(os.path.join(BASE_DIR, "data", "commodity_prices.csv"))
         match = df[(df['commodity'].str.lower().str.contains(commodity.lower())) & 
                    (df['location'].str.lower().str.contains(location.lower()))]
         if not match.empty:
@@ -615,7 +622,8 @@ def hybrid_remedy_expert(plant_name: str, disease_name: str):
     # --- TIER 1: LOCAL CSV ---
     # SAFE CSV LOADING
     try:
-        df = pd.read_csv("data/plants_info.csv")
+        df = pd.read_csv(os.path.join(BASE_DIR, "data", "plants_info.csv"))
+        #df = pd.read_csv("data/plants_info.csv")
         # ... (matching logic) ...
     except Exception as e:
         print(f"Data Warning: CSV not found or unreadable: {e}")
@@ -778,7 +786,9 @@ def get_irrigation_advice(soil_moisture: str, temperature: str, crop_type: str):
         #crop_type: The name of the crop (e.g., 'Wheat', 'Maize', 'Rice', 'Euphorbia').
     #"""
     
-    csv_path = "irrigation_recommendation.csv"
+    
+    #csv_path = "irrigation_recommendation.csv"
+    csv_path = os.path.join(BASE_DIR, "data", "irrigation_recommendation.csv")
     if not os.path.exists(csv_path):
         return "The irrigation database is currently unavailable. Please provide general watering advice for this crop."
 
