@@ -1027,7 +1027,7 @@ async def weather_page(data: LocationRequest, db: Session = Depends(get_db)):
     ##    f"then provide agricultural advice based on those specific conditions."
     #)
     prompt = (
-        f"The user wants a weather report for '{data.location}' containing Temperature, Rain prediction, Humidity and Wind. "
+        f"The user wants a weather report for '{data.location}' containing Temperature, Rain prediction, Humidity , Wind,  Crops to Sow and Crops to Reap. "
         f"Use the 'get_weather_by_location' tool to get the data, "
         f"then provide agricultural advice based on those specific conditions."
         f"Also consider that capitalized city names( for e.g, Dera Ismail Khan),lower case city names (for e.g, dera ismail khan) and Abbreviated names of the cities(for e.g,d i khan/D.I.Khan/D I Khan,"
@@ -1280,11 +1280,13 @@ async def irrigation_page(data: IrrigationRequest, db: Session = Depends(get_db)
     f"Act as a professional agronomist. Use the 'get_irrigation_advice' tool to retrieve "
     f"specific data for crop: '{data.crop_type}', temperature: {data.temperature}°C, "
     f"and soil moisture: {data.soil_moisture}%.\n"
-    f"Your task: Provide a comprehensive irrigation schedule and management strategy. "
-    f"You can also use irrigation_recommendation.csv to recommend.Detail the exact watering depth, recommended "
-    f"time of day for irrigation, and any specific techniques (like drip or flooding) "
-    f"based on the current moisture levels and heat stress(if present in irrigation_recommendation.csv)."
-    f"If the desired/asked details are not mentioned in irrigation_recommendation.csv, then use search_tool to search on Google about the asked/needed information."
+    f" Use irrigation_recommendation.csv to recommend watering requirements, critical stage/critical growth stage, status and warning etc"
+    f" if you are unable to get information , check again and ask politely and donot mention tool names "    
+    #f"Your task: Provide a comprehensive irrigation schedule and management strategy. "
+    #f"You can also use irrigation_recommendation.csv to recommend.Detail the exact watering depth, recommended "
+    #f"time of day for irrigation, and any specific techniques (like drip or flooding) "
+    #f"based on the current moisture levels and heat stress(if present in irrigation_recommendation.csv)."
+    #f"If the desired/asked details are not mentioned in irrigation_recommendation.csv, then use search_tool to search on Google about the asked/needed information."
        
     )
 
@@ -1442,11 +1444,13 @@ async def crop_production_page(data: CropProductionRequest, db: Session = Depend
     #    f"Summarize the boost strategy and growth hacks provided by the tool."
     #)
     prompt = (
-        f"Use the 'boost_crop_production' tool for plant_type='{data.plant_type}', "
-        f"fertility={data.soil_fertility}, and efficiency={data.irrigation_efficiency}.\n"
-        f"Your task: Provide a comprehensive recommendation for crop production."
-        f"You can also use production_boost.csv for your help."
-        f"If desired/asked/needed information is not available in production_boost.csv, use search_tool to search on Google for the needed information."
+       
+    
+        "Use the 'boost_crop_production' tool for plant_type='{data.plant_type}', "
+        "fertility={data.soil_fertility}, and efficiency={data.irrigation_efficiency}.\n"
+        "Your task: Use production_boost.csv for information like boost_strategy, growth_hack and soil_ph etc  "
+        #f"You can also use production_boost.csv for your help."
+        #f"If desired/asked/needed information is not available in production_boost.csv, use search_tool to search on Google for the needed information."
         f"Summarize the boost strategy and growth hacks provided by the tool."
     )
 
