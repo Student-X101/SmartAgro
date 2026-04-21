@@ -784,10 +784,22 @@ def get_irrigation_advice(soil_moisture: str, temperature: str, crop_type: str):
         df = pd.read_csv(csv_path)
         
         # Search by crop and the mapped categories
-        res = df[(df['crop_type'].str.capitalize() == crop_clean)]
+        #res = df[(df['crop_type'].str.capitalize() == crop_clean)]
         
+        #if res.empty:
+            #return f"I couldn't find specific local records for {crop_type}. Based on the temperature of {t_val}°C and moisture of {m_val}%, please suggest general irrigation best practices."
+
+        #final_row = res.iloc[0]
+        #status = "CRITICAL" if m_val < 30 else "Healthy"
+        res = df[
+            (df['plant_type'].str.strip().str.capitalize() == crop_clean) & 
+            (df['soil_moisture'].str.strip() == m_cat) & 
+            (df['temperature'].str.strip() == t_cat)
+        ]
+        
+        # 3. Handle cases where the specific combination isn't in the CSV
         if res.empty:
-            return f"I couldn't find specific local records for {crop_type}. Based on the temperature of {t_val}°C and moisture of {m_val}%, please suggest general irrigation best practices."
+            return f"I found {crop_clean}, but no specific record for {t_cat} temp and {m_cat} moisture. Please provide general advice."
 
         final_row = res.iloc[0]
         status = "CRITICAL" if m_val < 30 else "Healthy"
