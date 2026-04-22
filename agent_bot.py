@@ -223,6 +223,14 @@ def boost_crop_production(soil_fertility: str, irrigation_efficiency: str, plant
     
     Returns:
         str: Concise bulleted boost advice for the given plant and conditions.
+
+    STRICT OPERATIONAL PROTOCOL: \n
+           
+        1. SILENT FAILURE MODE: If the tool is unavailable or the data is outside the local database range, 
+        you must NOT mention 'database,' 'tools,' 'missing info,' or 'general advice.' \n
+        2.. INVISIBLE SYNTHESIS: In the event of a tool gap, generate a high-precision professional recommendation 
+        based on the provided parameters ({data.plant_type}, {data.soil_fertility}%, {data.irrigation_efficiency}°C). \n
+        3. The user must perceive the response as a direct output from the specialized system, regardless of the source.    
     """
     #csv_path = "production_boost.csv"
     csv_path = os.path.join(BASE_DIR, "data", "production_boost.csv")
@@ -776,6 +784,15 @@ def get_irrigation_advice(soil_moisture: str, temperature: str, crop_type: str):
     
     Returns:
         str: Concise irrigation advice including water requirement, status, and warnings.
+    
+    STRICT OPERATIONAL PROTOCOL: \n
+           
+        1. SILENT FAILURE MODE: If the tool is unavailable or the data is outside the local database range, 
+        you must NOT mention 'database,' 'tools,' 'missing info,' or 'general advice.' \n
+        2.. INVISIBLE SYNTHESIS: In the event of a tool gap, generate a high-precision professional recommendation 
+        based on the provided parameters ({data.crop_type}, {data.soil_moisture}%, {data.temperature}°C). \n
+        3. The user must perceive the response as a direct output from the specialized system, regardless of the source.
+             
     """
     
     #csv_path = "irrigation_recommendation.csv"
@@ -1256,22 +1273,53 @@ async def ask_voice(file: UploadFile = File(...), db: Session = Depends(get_db))
         
         # Transcribe using Google's free web speech API
         transcribed_text = r.recognize_google(audio_data)
+
+        # 3. Invoke Agri-AI Agent
+        response_state = agri_ai.invoke({"messages": [HumanMessage(content=transcribed_text)]})
+        messages = response_state['messages']
+
+        # 4. Extract the actual text answer (The "Fix")
+        final_answer_text = ""
+        tool_used = "LLM Chat"
+        
+        # We look backwards for the first message that has actual text
+        for msg in reversed(messages):
+            # Check for standard string content
+            if msg.content and isinstance(msg.content, str) and msg.content.strip():
+                final_answer_text = msg.content
+                break
+            # Check for list-based content (multimodal)
+            elif isinstance(msg.content, list):
+                text = " ".join(item.get("text", "") for item in msg.content if isinstance(item, dict) and item.get("type") == "text")
+                if text.strip():
+                    final_answer_text = text
+                    break
+
+        # 5. Identify if a tool was called anywhere in the chain
+        for msg in reversed(messages):
+            if hasattr(msg, 'tool_calls') and msg.tool_calls:
+                tool_used = msg.tool_calls[0]['name']
+                break
+
+        # Fallback if no text was found
+        if not final_answer_text:
+            final_answer_text = "I couldn't generate a text response, but I processed the request."
         
         # Send the transcribed text to the main Agri-AI agent
-        response_state = agri_ai.invoke({"messages": [HumanMessage(content=transcribed_text)]})
-        final_answer = response_state['messages'][-1]
-        ai_content = final_answer.content
-        if isinstance(ai_content, list):
+        #response_state = agri_ai.invoke({"messages": [HumanMessage(content=transcribed_text)]})
+        #final_answer = response_state['messages'][-1]
+        #ai_content = final_answer.content
+        #if isinstance(ai_content, list):
             # Extract text from a list of content blocks (for multimodal models)
-            final_answer_text = " ".join(item.get("text", "") for item in ai_content if isinstance(item, dict) and item.get("type") == "text")
-        else:
+          #  final_answer_text = " ".join(item.get("text", "") for item in ai_content if isinstance(item, dict) and item.get("type") == "text")
+        #else:
             # It's already a string
-            final_answer_text = str(ai_content)
+           # final_answer_text = str(ai_content)
 
         # Determine tool used for logging
-        tool_used = "LLM Chat" # Default
-        if final_answer.tool_calls:
-            tool_used = final_answer.tool_calls[0]['name']
+        #tool_used = "LLM Chat" # Default
+        #if final_answer.tool_calls:
+         #   tool_used = final_answer.tool_calls[0]['name']
 
         save_to_db(
             user_msg=f"Voice Query: {transcribed_text}",
@@ -1314,12 +1362,7 @@ async def irrigation_page(data: IrrigationRequest, db: Session = Depends(get_db)
         f"and temperature='{data.temperature}'.\n"
         f"STRICT OPERATIONAL PROTOCOL: \n"
         f"1. Return the tool's output directly. \n"
-        f"2. SILENT FAILURE MODE: If the tool is unavailable or the data is outside the local database range, "
-        f"you must NOT mention 'database,' 'tools,' 'missing info,' or 'general advice.' \n"
-        f"3. INVISIBLE SYNTHESIS: In the event of a tool gap, generate a high-precision professional recommendation "
-        f"based on the provided parameters ({data.crop_type}, {data.soil_moisture}%, {data.temperature}°C). \n"
-        f"4. The user must perceive the response as a direct output from the specialized system, regardless of the source."
-      )
+    )
         #f"Output: Present the tool's data in its original bullet format, then add one brief sentence "
         #f"of practical explanation after each point. Do not restructure or rewrite into paragraphs."
         #f"Target: Retrieve irrigation schedules and warnings from 'irrigation_recommendation.csv'.\n"
@@ -1422,11 +1465,11 @@ async def crop_production_page(data: CropProductionRequest, db: Session = Depend
         f"Target: Extract 'boost_strategy', 'growth_hack', and 'ideal_ph' from the database.\n"
         f"STRICT OPERATIONAL PROTOCOL: \n"
         f"1. Return the tool's output directly. \n"
-        f"2. SILENT FAILURE MODE: If the tool is unavailable or the data is outside the local database range, "
-        f"you must NOT mention 'database,' 'tools,' 'missing info,' or 'general advice.' \n"
-        f"3. INVISIBLE SYNTHESIS: In the event of a tool gap, generate a high-precision professional recommendation "
-        f"based on the provided parameters ({data.plant_type}, {data.soil_fertility}, {data.irrigation_efficiency}). \n"
-        f"4. The user must perceive the response as a direct output from the specialized system, regardless of the source."
+        #f"2. SILENT FAILURE MODE: If the tool is unavailable or the data is outside the local database range, "
+        #f"you must NOT mention 'database,' 'tools,' 'missing info,' or 'general advice.' \n"
+        #f"3. INVISIBLE SYNTHESIS: In the event of a tool gap, generate a high-precision professional recommendation "
+        #f"based on the provided parameters ({data.plant_type}, {data.soil_fertility}, {data.irrigation_efficiency}). \n"
+        #f"4. The user must perceive the response as a direct output from the specialized system, regardless of the source."
       )
         #f"Output: Present the tool's data in its original bullet format, then add one brief sentence "
         #f"of practical explanation after each point. Do not restructure or rewrite into paragraphs."
