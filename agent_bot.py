@@ -3144,7 +3144,7 @@ ALIASES = {
 def get_irrigation_advice(soil_moisture: str, temperature: str, crop_type: str) -> str:
     """
     Returns a hardcoded, precision irrigation report for a given crop, soil
-    moisture level, and temperature directly from the irrigation database.
+    moisture level, and temperature directly from the Local database DB.
     Zero CSV parsing. Zero agent inference. Pure lookup.
 
     Args:
@@ -3764,8 +3764,7 @@ async def soil_analysis_page(data: SoilAnalysisRequest, db: Session = Depends(ge
 
 @app.post("/feature/crop-production")
 async def crop_production_page(data: CropProductionRequest, db: Session = Depends(get_db)):
-  
-        prompt = (
+     prompt = (
         f"INSTRUCTION: Use the 'boost_crop_production' tool for: "
         f"Plant: {data.plant_type}, Fertility: {data.soil_fertility}%, Irrigation: {data.irrigation_efficiency}%.\n"
         f"STRICT RULES:\n"
@@ -3776,24 +3775,7 @@ async def crop_production_page(data: CropProductionRequest, db: Session = Depend
         f"GROWTH HACK: [Content]\n"
         f"IDEAL PH: [Content]"
     )
-        #f"INSTRUCTION: Call the 'boost_crop_production' tool using these parameters: "
-        #f"plant_type='{data.plant_type}', soil_fertility='{data.soil_fertility}', "
-        #f"and irrigation_efficiency='{data.irrigation_efficiency}'.\n"
-        #f"Target: Extract 'boost_strategy', 'growth_hack', and 'ideal_ph' from the database.\n"
-        #f"STRICT OPERATIONAL PROTOCOL: \n"
-        #f"1. Return the tool's output directly. \n"
-        #f"2. SILENT FAILURE MODE: If the tool is unavailable or the data is outside the local database range, "
-        #f"you must NOT mention 'database,' 'tools,' 'missing info,' or 'general advice.' \n"
-        #f"3. INVISIBLE SYNTHESIS: In the event of a tool gap, generate a high-precision professional recommendation "
-        #f"based on the provided parameters ({data.plant_type}, {data.soil_fertility}, {data.irrigation_efficiency}). \n"
-        #f"4. The user must perceive the response as a direct output from the specialized system, regardless of the source."
-  #    )
-        #f"Output: Present the tool's data in its original bullet format, then add one brief sentence "
-        #f"of practical explanation after each point. Do not restructure or rewrite into paragraphs."
-        #f"Output: Return the tool's data and for each point add 1-2 sentences of practical context "
-        #f"explaining why it matters for {data.plant_type} under these soil and irrigation conditions. Do not add unrelated advice."
-    #)
-    # 2. Invoke Agent
+     # 2. Invoke Agent
     response_state = await agri_ai.ainvoke({"messages": [HumanMessage(content=prompt)]})
     messages = response_state['messages']
 
@@ -3817,26 +3799,7 @@ async def crop_production_page(data: CropProductionRequest, db: Session = Depend
     # Safety net
     if not final_answer:
         final_answer = "Unable to retrieve data. Please try again."
-    # 2. Invoke Agent
-    #response_state = await agri_ai.ainvoke({"messages": [HumanMessage(content=prompt)]})
-    #raw_content = response_state['messages'][-1].content
-
-    # Cleaning for SQLite
-    #final_answer = " ".join([item.get("text", "") for item in raw_content if isinstance(item, dict)]) if isinstance(raw_content, list) else str(raw_content)
-    #if isinstance(raw_content, list):
-     #   parts = []
-      #  for item in raw_content:
-       #     if isinstance(item, dict):
-        #        text = item.get("text") or item.get("content") or str(item)
-         #       parts.append(text)
-          #  elif isinstance(item, str):
-           #     parts.append(item)
-        #final_answer = " ".join(parts).strip()
-    #else:
-     #   final_answer = str(raw_content).strip()
-
-    # Safety net — if still empty, something is wrong upstream
-    #if not final_answer:
+    
      #   final_answer = "Unable to retrieve data. Please try again."
     save_to_db(user_msg=f"Boost: {data.plant_type} , Fertility:{data.soil_fertility} and Irrigation Efficiency:{data.irrigation_efficiency}", ai_msg=final_answer, tool="Production Boost Tool", db=db)
     try:
@@ -3848,6 +3811,12 @@ async def crop_production_page(data: CropProductionRequest, db: Session = Depend
     return {"status": "success", "recommendation": final_answer}
 
 
+
+  
+       
+   
+
+    
 @app.post("/feature/scanner")
 async def disease_page(
     file: UploadFile = File(...), 
