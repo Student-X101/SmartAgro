@@ -1066,7 +1066,7 @@ ALIASES1 = {
 def boost_crop_production(soil_fertility: str, irrigation_efficiency: str, plant_type: str) -> str:
     """
     Returns a hardcoded, precision boost strategy for a given plant type and
-    soil/irrigation conditions directly from the production database.
+    soil/irrigation conditions directly from the production database DB1
     Zero CSV parsing. Zero agent inference. Pure lookup.
 
     Args:
@@ -1119,7 +1119,7 @@ def boost_crop_production(soil_fertility: str, irrigation_efficiency: str, plant
     if plant_data is None:
         supported = ", ".join(sorted(k.title() for k in DB1.keys()))
         return (
-            f"⚠️ '{plant_type.strip()}' is not in the production database.\n"
+            f"⚠️ DATA_MISSING.  '{plant_type.strip()}' is not in the production database.\n"
             f"Supported varieties: {supported}."
         )
 
@@ -3209,7 +3209,7 @@ def get_irrigation_advice(soil_moisture: str, temperature: str, crop_type: str) 
     if crop_data is None:
         supported = ", ".join(sorted(k.title() for k in DB.keys()))
         return (
-            f"⚠️ '{crop_type.strip()}' is not in the irrigation database.\n"
+            f"⚠️DATA_MISSING '{crop_type.strip()}' is not in the irrigation database.\n"
             f"Supported varieties: {supported}."
         )
 
@@ -3314,71 +3314,6 @@ def save_to_remote_db(endpoint_path: str, payload: dict):
         print(f"Failed to save to remote DB: {e}")
         return None
 #===========================================================================================================
-#import gspread
-#from oauth2client.service_account import ServiceAccountCredentials
-
-# AUTHENTICATION
-#scope = ["https://spreadsheets.google.com/feeds","https://www.googleapis.com/auth/drive"]
-# IMPORTANT: Make sure 'service_account.json' is in your main folder!
-#creds = ServiceAccountCredentials.from_json_keyfile_name("service_account.json", scope)
-#client = gspread.authorize(creds)
-#sheet = client.open("SmartAgro_AI_Responses").sheet1
-
-# Universal request model
-#class AIRequest(BaseModel):
-#    user_id: str
-#    feature: str
-#    crop_or_plant: str = "N/A"
-#    soil_moisture: str = None
-#    soil_type: str = "N/A"
-#    temperature: str = None
-#    fertility: str = None
-#    irrigation_efficiency: str = None
-#    uploaded_pic_url: str = "N/A"
-#    text_voice: str = "N/A"
-    #rainfall: str = None
-    #humidity: str = None
-    #weather_temp: str = None
-#    ai_recommendation: str
-
-#def universal_save(
-#    feature, 
-##    ai_recommendation, 
-#    user_id="Exhibition_User", 
-#    crop_or_plant="N/A", 
-#    soil_moisture="N/A", 
-#    soil_type="N/A", 
-#    temperature="N/A", 
-#    fertility="N/A", 
-#    irrigation_efficiency="N/A",
-#    uploaded_pic_url="N/A",
-#    text_voice="N/A",
-    #rainfall="N/A",
-    #humidity="N/A",
-    #weather_temp="N/A"
-   # ):
-   # try:
-    #    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        
-        # CRITICAL: This list MUST stay in her exact Column A-O order
-    #    row = [
-    ##        user_id, feature, crop_or_plant, soil_moisture, soil_type,
-    #        temperature, fertility, irrigation_efficiency, uploaded_pic_url,
-    #        text_voice, 
-    #        str(ai_recommendation), timestamp
-    #    ]
-        
-        # Background thread so the AI doesn't wait for Google
-    #    threading.Thread(target=sheet.append_row, args=(row,)).start()
-   # except Exception as e:
-    #    print(f"Spreadsheet Error: {e}")
-       
-        
-       
-
-
-
-
 
 #=======================================================================================================
 
@@ -3729,51 +3664,50 @@ async def ask_voice(file: UploadFile = File(...), db: Session = Depends(get_db))
 @app.post("/feature/irrigation")
 async def irrigation_page(data: IrrigationRequest, db: Session = Depends(get_db)):#, db: Session = Depends(get_db)
     prompt = (
-        f"INSTRUCTION: Call the 'get_irrigation_advice' tool using these parameters: "
-        f"crop_type='{data.crop_type}', soil_moisture='{data.soil_moisture}', "
-        f"and temperature='{data.temperature}'.\n"
-        f"STRICT OPERATIONAL PROTOCOL: \n"
-        f"1. Return the tool's output directly. \n"
+        f"INSTRUCTION: Use the 'get_irrigation_advice' tool for: "
+        f"Crop: {data.crop_type}, Moisture: {data.soil_moisture}%, Temp: {data.temperature}°C.\n"
+        f"STRICT RULES:\n"
+        f"1. If the tool returns a report, present it exactly.\n"
+        f"2. If the tool returns 'DATA_MISSING', mention the supported varieties, then provide "
+        f"a professional irrigation schedule for {data.crop_type} based on the current "
+        f"moisture ({data.soil_moisture}%) and temperature ({data.temperature}°C) using your knowledge.\n"
+        f"FORMATTING: Always use headers like 'WATER REQUIREMENT', 'WARNING', and 'RECOMMENDATION'."
     )
-        #f"Output: Present the tool's data in its original bullet format, then add one brief sentence "
-        #f"of practical explanation after each point. Do not restructure or rewrite into paragraphs."
-        #f"Target: Retrieve irrigation schedules and warnings from 'irrigation_recommendation.csv'.\n"
-        #f"Output: Return the tool's data and for each point add 1-2 sentences of practical context "
-        #f"explaining why it matters for {data.crop_type} in these conditions. Do not add unrelated advice."
-    #)
-    #prompt = (
-    #f"Use the 'get_irrigation_advice' tool for crop_type='{data.crop_type}', "
-    #f"soil_moisture='{data.soil_moisture}', and temperature='{data.temperature}'.\n"
-    #f"Your task: Extract data from 'irrigation_recommendation.csv' . "
-    #f"Provide a concise summary of the irrigation advice found in the database."
-    #)
      
     # 2. Invoke the Agent
     response_state = await agri_ai.ainvoke({"messages": [HumanMessage(content=prompt)]})
-    raw_content = response_state['messages'][-1].content
+    messages = response_state.get('messages', [])
 
-    # 3. FIX: SQLite string conversion
-    #if isinstance(raw_content, list):
-     #   final_answer = " ".join([item.get("text", "") for item in raw_content if isinstance(item, dict)])
-    #else:
-     #   final_answer = str(raw_content)
+    # 3. Robust Content Extraction
+    final_answer = ""
 
-        # Replace your current cleaning block with this
-    if isinstance(raw_content, list):
-        parts = []
-        for item in raw_content:
-            if isinstance(item, dict):
-                text = item.get("text") or item.get("content") or str(item)
-                parts.append(text)
-            elif isinstance(item, str):
-                parts.append(item)
-        final_answer = " ".join(parts).strip()
-    else:
-        final_answer = str(raw_content).strip()
-    
+    # We iterate backwards to find the actual response text
+    for msg in reversed(messages):
+        # 1. Handle standard string content (most common)
+        if isinstance(msg.content, str) and msg.content.strip():
+            # If the message has tool_calls but also has text, we take it.
+            # If it's just a pure text message, we take it.
+            final_answer = msg.content.strip()
+            break
+        
+        # 2. Handle content that comes as a list (common in some model versions)
+        elif isinstance(msg.content, list):
+            parts = []
+            for item in msg.content:
+                if isinstance(item, dict):
+                    # Extract text from the specific block types
+                    text_part = item.get("text") or item.get("content")
+                    if text_part:
+                        parts.append(text_part)
+            
+            combined_text = " ".join(parts).strip()
+            if combined_text:
+                final_answer = combined_text
+                break
+
+    # Safety net — if the loop finishes and final_answer is still empty
     if not final_answer:
         final_answer = "Unable to retrieve irrigation data. Please try again."
-
     # 4. Save to DB
     save_to_db(
         user_msg=f"Irrigation: {data.crop_type} at {data.soil_moisture}% moisture", 
@@ -3830,46 +3764,80 @@ async def soil_analysis_page(data: SoilAnalysisRequest, db: Session = Depends(ge
 
 @app.post("/feature/crop-production")
 async def crop_production_page(data: CropProductionRequest, db: Session = Depends(get_db)):
-    prompt = (
-        f"INSTRUCTION: Call the 'boost_crop_production' tool using these parameters: "
-        f"plant_type='{data.plant_type}', soil_fertility='{data.soil_fertility}', "
-        f"and irrigation_efficiency='{data.irrigation_efficiency}'.\n"
-        f"Target: Extract 'boost_strategy', 'growth_hack', and 'ideal_ph' from the database.\n"
-        f"STRICT OPERATIONAL PROTOCOL: \n"
-        f"1. Return the tool's output directly. \n"
+  
+        prompt = (
+        f"INSTRUCTION: Use the 'boost_crop_production' tool for: "
+        f"Plant: {data.plant_type}, Fertility: {data.soil_fertility}%, Irrigation: {data.irrigation_efficiency}%.\n"
+        f"STRICT RULES:\n"
+        f"1. If the tool returns data, present it exactly.\n"
+        f"2. If the tool returns 'DATA_MISSING', use your knowledge to generate a recommendation.\n"
+        f"3. FORMATTING: Always return the answer in this exact structure:\n"
+        f"BOOST STRATEGY: [Content]\n"
+        f"GROWTH HACK: [Content]\n"
+        f"IDEAL PH: [Content]"
+    )
+        #f"INSTRUCTION: Call the 'boost_crop_production' tool using these parameters: "
+        #f"plant_type='{data.plant_type}', soil_fertility='{data.soil_fertility}', "
+        #f"and irrigation_efficiency='{data.irrigation_efficiency}'.\n"
+        #f"Target: Extract 'boost_strategy', 'growth_hack', and 'ideal_ph' from the database.\n"
+        #f"STRICT OPERATIONAL PROTOCOL: \n"
+        #f"1. Return the tool's output directly. \n"
         #f"2. SILENT FAILURE MODE: If the tool is unavailable or the data is outside the local database range, "
         #f"you must NOT mention 'database,' 'tools,' 'missing info,' or 'general advice.' \n"
         #f"3. INVISIBLE SYNTHESIS: In the event of a tool gap, generate a high-precision professional recommendation "
         #f"based on the provided parameters ({data.plant_type}, {data.soil_fertility}, {data.irrigation_efficiency}). \n"
         #f"4. The user must perceive the response as a direct output from the specialized system, regardless of the source."
-      )
+  #    )
         #f"Output: Present the tool's data in its original bullet format, then add one brief sentence "
         #f"of practical explanation after each point. Do not restructure or rewrite into paragraphs."
         #f"Output: Return the tool's data and for each point add 1-2 sentences of practical context "
         #f"explaining why it matters for {data.plant_type} under these soil and irrigation conditions. Do not add unrelated advice."
     #)
-    
     # 2. Invoke Agent
     response_state = await agri_ai.ainvoke({"messages": [HumanMessage(content=prompt)]})
-    raw_content = response_state['messages'][-1].content
+    messages = response_state['messages']
+
+    # New Extraction Logic: Look for the actual answer
+    final_answer = ""
+    for msg in reversed(messages):
+        # Skip if it's a message that just contains tool calls and no text
+        if hasattr(msg, 'tool_calls') and msg.tool_calls and not msg.content:
+            continue
+        
+        if msg.content:
+            if isinstance(msg.content, str) and msg.content.strip():
+                final_answer = msg.content
+                break
+            elif isinstance(msg.content, list):
+                text = " ".join(item.get("text", "") for item in msg.content if isinstance(item, dict) and item.get("type") == "text")
+                if text.strip():
+                    final_answer = text
+                    break
+
+    # Safety net
+    if not final_answer:
+        final_answer = "Unable to retrieve data. Please try again."
+    # 2. Invoke Agent
+    #response_state = await agri_ai.ainvoke({"messages": [HumanMessage(content=prompt)]})
+    #raw_content = response_state['messages'][-1].content
 
     # Cleaning for SQLite
     #final_answer = " ".join([item.get("text", "") for item in raw_content if isinstance(item, dict)]) if isinstance(raw_content, list) else str(raw_content)
-    if isinstance(raw_content, list):
-        parts = []
-        for item in raw_content:
-            if isinstance(item, dict):
-                text = item.get("text") or item.get("content") or str(item)
-                parts.append(text)
-            elif isinstance(item, str):
-                parts.append(item)
-        final_answer = " ".join(parts).strip()
-    else:
-        final_answer = str(raw_content).strip()
+    #if isinstance(raw_content, list):
+     #   parts = []
+      #  for item in raw_content:
+       #     if isinstance(item, dict):
+        #        text = item.get("text") or item.get("content") or str(item)
+         #       parts.append(text)
+          #  elif isinstance(item, str):
+           #     parts.append(item)
+        #final_answer = " ".join(parts).strip()
+    #else:
+     #   final_answer = str(raw_content).strip()
 
     # Safety net — if still empty, something is wrong upstream
-    if not final_answer:
-        final_answer = "Unable to retrieve data. Please try again."
+    #if not final_answer:
+     #   final_answer = "Unable to retrieve data. Please try again."
     save_to_db(user_msg=f"Boost: {data.plant_type} , Fertility:{data.soil_fertility} and Irrigation Efficiency:{data.irrigation_efficiency}", ai_msg=final_answer, tool="Production Boost Tool", db=db)
     try:
         
