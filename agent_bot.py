@@ -3764,7 +3764,8 @@ async def soil_analysis_page(data: SoilAnalysisRequest, db: Session = Depends(ge
 
 @app.post("/feature/crop-production")
 async def crop_production_page(data: CropProductionRequest, db: Session = Depends(get_db)):
-     prompt = (
+    
+    prompt = (
         f"INSTRUCTION: Use the 'boost_crop_production' tool for: "
         f"Plant: {data.plant_type}, Fertility: {data.soil_fertility}%, Irrigation: {data.irrigation_efficiency}%.\n"
         f"STRICT RULES:\n"
