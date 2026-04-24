@@ -1055,6 +1055,11 @@ ALIASES1 = {
     "corn":             "maize",
     "sugarcane":        "sugarcane",
     "sugar cane":       "sugarcane",
+    "aleovera": "aloe vera",
+    "aleo vera": "aloe vera",
+    "rubber plant": "rubber tree",
+    "sufaida": "eucalyptus",
+    "toot": "mulberry"
 }
 
 
@@ -1583,6 +1588,10 @@ def hybrid_remedy_expert(plant_name: str, disease_name: str):
     "Euphorbia":"./data/Euphorbia",
     "Java Plum":"./data/Java Plum",
     "Jasmine":"./data/jasmine",
+    "Sheesham": "./data/Sheesham",
+    "Eucalyptus": "./data/Sufaida_eucalyptus",
+    "Rubber": "./data/Rubber Tree",
+    "thuja": "./data/thuja",
     }
  
  
@@ -3133,6 +3142,11 @@ ALIASES = {
     "aloe":             "aloe vera",
     "corn":             "maize",
     "sugar cane":       "sugarcane",
+    "aleovera": "aloe vera",
+    "aleo vera": "aloe vera",
+    "rubber plant": "rubber tree",
+    "sufaida": "eucalyptus",
+    "toot": "mulberry",
 }
 
 
